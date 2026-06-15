@@ -10,7 +10,7 @@ or local agricultural extension professional.
 ## Features
 
 - JPG, JPEG, PNG, and WEBP uploads
-- Crop-first routing with the required Corn-biased decision rule
+- Grayscale Corn detection with the required Corn-biased decision rule
 - Crop-specific disease detection and confidence fallbacks
 - YOLO bounding-box annotation
 - Practical recommendations only for diseased results
@@ -67,7 +67,6 @@ Crop model:
 
 ```text
 Corn
-Grape
 ```
 
 Corn disease model:
@@ -93,15 +92,17 @@ display names.
 
 ## Decision Logic
 
-1. The crop detector runs first.
+1. The application creates an in-memory grayscale copy of the uploaded image
+   for the single-class Corn detector. The original image remains unchanged.
 2. If any Corn detection survives the model confidence filter, the
    highest-confidence Corn box is selected and the Corn disease model runs.
-3. If Corn is not detected, the crop is intentionally assumed to be Grape. A
-   detected Grape confidence is shown when available; otherwise crop confidence
-   is `0.0%`.
-4. Corn uses the highest-confidence supported disease detection. No detection
+3. If Corn is not detected, the crop is intentionally assumed to be Grape and
+   crop confidence is `0.0%`.
+4. The original color image, not the grayscale copy, is sent to the selected
+   disease model and used for annotation.
+5. Corn uses the highest-confidence supported disease detection. No detection
    returns `Healthy` with `0.0%` confidence.
-5. Grape uses a `0.40` disease confidence threshold. No detection or a highest
+6. Grape uses a `0.40` disease confidence threshold. No detection or a highest
    confidence below `0.40` returns `Healthy Grape Vine` with `0.0%` confidence.
 
 ## Installation

@@ -40,8 +40,6 @@ def _label_key(label: str) -> str:
 CROP_ALIASES = {
     "corn": "Corn",
     "maize": "Corn",
-    "grape": "Grape",
-    "grape vine": "Grape",
 }
 
 CORN_DISEASE_ALIASES = {
@@ -80,7 +78,7 @@ HEALTHY_DISEASES = {"healthy", "Healthy Grape Vine"}
 
 
 def select_crop(detections: Iterable[Detection]) -> CropDecision:
-    """Select Corn when detected; otherwise intentionally assume Grape."""
+    """Select Corn from the single-class detector; otherwise assume Grape."""
     normalized = [
         (CROP_ALIASES.get(_label_key(item.class_name)), item) for item in detections
     ]
@@ -89,16 +87,10 @@ def select_crop(detections: Iterable[Detection]) -> CropDecision:
         selected = max(corn_detections, key=lambda item: item.confidence)
         return CropDecision("Corn", selected.confidence, selected, False)
 
-    grape_detections = [item for name, item in normalized if name == "Grape"]
-    selected = (
-        max(grape_detections, key=lambda item: item.confidence)
-        if grape_detections
-        else None
-    )
     return CropDecision(
         name="Grape",
-        confidence=selected.confidence if selected else 0.0,
-        selected_detection=selected,
+        confidence=0.0,
+        selected_detection=None,
         was_assumed=True,
     )
 

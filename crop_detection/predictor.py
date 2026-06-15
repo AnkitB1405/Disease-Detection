@@ -192,11 +192,18 @@ def run_inference(model: Any, image: Image.Image) -> list[Detection]:
     return detections
 
 
+def create_grayscale_copy(image: Image.Image) -> Image.Image:
+    """Return an RGB grayscale copy without modifying the original image."""
+    return image.convert("L").convert("RGB")
+
+
 def analyze_image(image: Image.Image, manager: ModelManager) -> AnalysisResult:
     """Run crop detection, route disease inference, and annotate the result."""
-    crop_detections = run_inference(manager.crop_model(), image)
+    crop_input = create_grayscale_copy(image)
+    crop_detections = run_inference(manager.crop_model(), crop_input)
     crop = select_crop(crop_detections)
 
+    # Disease models were trained on color images, so retain the original input.
     disease_detections = run_inference(manager.disease_model(crop.name), image)
     disease = select_disease(crop.name, disease_detections)
 

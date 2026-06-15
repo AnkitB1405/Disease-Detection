@@ -87,8 +87,9 @@ def streamlit_main() -> None:
     with action_column:
         st.subheader("Analysis")
         st.write(
-            "The crop detector checks for Corn first. When Corn is not "
-            "detected, the image is intentionally routed to the Grape model."
+            "A grayscale copy is checked for Corn first. When Corn is not "
+            "detected, the original image is intentionally routed to the "
+            "Grape disease model."
         )
         analyze_clicked = st.button(
             "Analyze Image",

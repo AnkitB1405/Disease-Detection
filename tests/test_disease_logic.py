@@ -23,6 +23,14 @@ def test_grape_is_assumed_when_corn_is_not_detected() -> None:
     assert result.was_assumed
 
 
+def test_non_corn_detection_is_ignored_by_single_class_crop_logic() -> None:
+    result = select_crop([detection("Grape", 0.98)])
+    assert result.name == "Grape"
+    assert result.confidence == 0.0
+    assert result.selected_detection is None
+    assert result.was_assumed
+
+
 def test_corn_uses_highest_confidence_disease() -> None:
     result = select_disease(
         "Corn",
