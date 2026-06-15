@@ -26,7 +26,7 @@ or local agricultural extension professional.
 ├── requirements.txt            # Application and YOLOv5 runtime dependencies
 ├── README.md                    # Setup, model placement, and usage guide
 ├── models/
-│   ├── crop_detector.pt         # Crop model; add after retraining
+│   ├── crop_detector.pt         # Crop model YOLOv5 weights
 │   ├── corn_disease.pt          # Corn disease YOLOv5 weights
 │   └── grape_disease.pt         # Grape disease YOLOv5 weights
 ├── crop_detection/
