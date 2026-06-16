@@ -125,15 +125,30 @@ def streamlit_main() -> None:
     st.subheader("Detection Result")
 
     crop_column, disease_column = st.columns(2, gap="large")
+    
     with crop_column:
         st.metric("Crop", result.crop_name)
         st.metric("Crop Confidence", f"{result.crop_confidence:.1%}")
+        
+        # Display all crop detection confidences
+        st.write("**All Crop Confidences:**")
+        if hasattr(result, 'all_crop_confidences') and result.all_crop_confidences:
+            for crop_class, confidence in result.all_crop_confidences.items():
+                st.write(f"  • {crop_class}: {confidence:.1%}")
+        
         if result.crop_was_assumed:
             st.caption("Grape was assumed because no Corn detection was found.")
 
     with disease_column:
         st.metric("Disease", result.disease_name)
         st.metric("Disease Confidence", f"{result.disease_confidence:.1%}")
+        
+        # Display all disease detection confidences
+        st.write("**All Disease Confidences:**")
+        if hasattr(result, 'all_disease_confidences') and result.all_disease_confidences:
+            for disease_class, confidence in result.all_disease_confidences.items():
+                st.write(f"  • {disease_class}: {confidence:.1%}")
+        
         if result.disease_was_fallback:
             st.caption("Healthy fallback applied because no qualifying disease was found.")
 
