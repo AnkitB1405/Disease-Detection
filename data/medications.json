@@ -1,0 +1,231 @@
+{
+  "version": "1.0",
+  "note": "All data sourced from University of Minnesota Extension, Penn State Extension, and the Crop Protection Network. Always follow the product label and local regulations. The LLM must not suggest any medication, dosage, or timing not listed here.",
+  "diseases": {
+    "corn": {
+      "rust": {
+        "display_name": "Corn Rust",
+        "description": "Southern corn rust (Puccinia polysora) appears as small, circular to oval pustules on the upper leaf surface. Pustules are orange-tan to cinnamon-brown. Common in warm, humid seasons.",
+        "cultural_controls": [
+          "Plant rust-resistant hybrids where available",
+          "Scout fields regularly from tasseling through dough stage",
+          "Monitor regional disease forecasts (e.g., USDA risk maps)"
+        ],
+        "medications": [
+          {
+            "id": "corn_rust_001",
+            "trade_name": "Headline",
+            "active_ingredient": "pyraclostrobin",
+            "class": "strobilurin (QoI) fungicide",
+            "application_method": "foliar_spray",
+            "dosage_rate": "6–12 fl oz/acre",
+            "water_volume": "10–20 gal/acre",
+            "timing": "Apply at first sign of rust pustules or when regional forecasts indicate elevated risk. Most effective applied before or very early in the epidemic.",
+            "reapplication_interval_days": 14,
+            "preharvest_interval_days": 14,
+            "max_applications_per_season": 3,
+            "notes": "Do not apply more than 36 fl oz/acre per season. Rotate to a different fungicide class if a second application is needed.",
+            "research_source": "University of Minnesota Extension / Crop Protection Network",
+            "severity_threshold": "Economic threshold generally reached when >5% of leaf area shows pustules before or at tasseling on susceptible hybrids"
+          },
+          {
+            "id": "corn_rust_002",
+            "trade_name": "Quilt Xcel",
+            "active_ingredient": "azoxystrobin + propiconazole",
+            "class": "strobilurin + triazole (QoI + DMI) premix fungicide",
+            "application_method": "foliar_spray",
+            "dosage_rate": "10.5–14 fl oz/acre",
+            "water_volume": "10–20 gal/acre",
+            "timing": "Apply at first sign of disease. Premix provides dual mode of action, reducing resistance risk.",
+            "reapplication_interval_days": 14,
+            "preharvest_interval_days": 30,
+            "max_applications_per_season": 2,
+            "notes": "Do not apply within 30 days of harvest.",
+            "research_source": "Crop Protection Network — Fungicide Efficacy for Control of Corn Foliar Diseases",
+            "severity_threshold": "Same as single-mode products; premix preferred when disease pressure is high"
+          }
+        ]
+      },
+      "gray_leaf": {
+        "display_name": "Gray Leaf Spot",
+        "description": "Gray leaf spot (Cercospora zeae-maydis) produces rectangular, tan-to-gray lesions bounded by leaf veins. Severe infections can cause premature leaf death and significant yield loss.",
+        "cultural_controls": [
+          "Rotate away from corn at least one year to reduce inoculum",
+          "Manage infected crop residue through tillage or promotion of residue breakdown",
+          "Plant resistant or tolerant hybrids — the most cost-effective control",
+          "Improve field drainage and airflow where possible"
+        ],
+        "medications": [
+          {
+            "id": "corn_gls_001",
+            "trade_name": "Aproach",
+            "active_ingredient": "picoxystrobin",
+            "class": "strobilurin (QoI) fungicide",
+            "application_method": "foliar_spray",
+            "dosage_rate": "6–12 fl oz/acre",
+            "water_volume": "10–20 gal/acre",
+            "timing": "Apply at or just before tasseling (VT–R1) when scouting shows disease present on the ear leaf or above under susceptible hybrid conditions.",
+            "reapplication_interval_days": 14,
+            "preharvest_interval_days": 21,
+            "max_applications_per_season": 2,
+            "notes": "Most economical when applied on susceptible hybrids in high-risk environments (continuous corn, no-till, history of GLS).",
+            "research_source": "University of Minnesota Extension — Corn Gray Leaf Spot",
+            "severity_threshold": "Apply when GLS lesions are present on or above the ear leaf at tasseling on susceptible hybrids in high-risk fields"
+          },
+          {
+            "id": "corn_gls_002",
+            "trade_name": "Trivapro",
+            "active_ingredient": "azoxystrobin + propiconazole + benzovindiflupyr",
+            "class": "strobilurin + triazole + SDHI premix",
+            "application_method": "foliar_spray",
+            "dosage_rate": "13.7 fl oz/acre",
+            "water_volume": "10–20 gal/acre",
+            "timing": "Apply at VT–R1. Three-way premix offers broad-spectrum control and extended residual activity.",
+            "reapplication_interval_days": 14,
+            "preharvest_interval_days": 21,
+            "max_applications_per_season": 2,
+            "notes": "Higher cost; most justified on high-yield-potential fields with susceptible hybrids and confirmed GLS.",
+            "research_source": "Crop Protection Network — Fungicide Efficacy for Control of Corn Foliar Diseases",
+            "severity_threshold": "Same as single-mode products; preferred for heavy pressure or when extended residual activity is needed"
+          }
+        ]
+      },
+      "blight": {
+        "display_name": "Northern Corn Leaf Blight",
+        "description": "Northern corn leaf blight (Exserohilum turcicum) produces long, elliptical, cigar-shaped tan to gray-green lesions 1–6 inches long. Spreads rapidly under cool, wet weather.",
+        "cultural_controls": [
+          "Plant resistant hybrids — look for hybrids with Ht1, Ht2, Htm1, or quantitative resistance",
+          "Rotate away from corn to reduce infected residue on the soil surface",
+          "Encourage residue breakdown with tillage or in-field composting",
+          "Scout from V12 through silking; infection before tasseling causes greatest yield loss"
+        ],
+        "medications": [
+          {
+            "id": "corn_blight_001",
+            "trade_name": "Tilt",
+            "active_ingredient": "propiconazole",
+            "class": "triazole (DMI) fungicide",
+            "application_method": "foliar_spray",
+            "dosage_rate": "4 fl oz/acre",
+            "water_volume": "10–20 gal/acre",
+            "timing": "Apply at or before tasseling when lesions are present on the third leaf below the ear or higher on susceptible hybrids.",
+            "reapplication_interval_days": 14,
+            "preharvest_interval_days": 30,
+            "max_applications_per_season": 2,
+            "notes": "Triazoles provide curative as well as protective activity. Good resistance management choice when alternated with strobilurins.",
+            "research_source": "University of Minnesota Extension — Northern Corn Leaf Blight",
+            "severity_threshold": "Economic threshold: lesions present on the ear leaf or above at tasseling on a susceptible hybrid"
+          },
+          {
+            "id": "corn_blight_002",
+            "trade_name": "Delaro 325 SC",
+            "active_ingredient": "trifloxystrobin + prothioconazole",
+            "class": "strobilurin + triazole premix",
+            "application_method": "foliar_spray",
+            "dosage_rate": "8 fl oz/acre",
+            "water_volume": "10–20 gal/acre",
+            "timing": "Apply at VT–R1. Premix offers improved control over single-mode products for high-pressure situations.",
+            "reapplication_interval_days": 14,
+            "preharvest_interval_days": 21,
+            "max_applications_per_season": 2,
+            "notes": "Do not apply more than 16 fl oz/acre per season.",
+            "research_source": "Crop Protection Network — Fungicide Efficacy for Control of Corn Foliar Diseases",
+            "severity_threshold": "Same as single-mode; preferred when both NCLB and gray leaf spot pressure are present"
+          }
+        ]
+      }
+    },
+    "grape": {
+      "Black Rot Grape Vine": {
+        "display_name": "Black Rot (Grape)",
+        "description": "Black rot (Guignardia bidwellii) causes circular tan lesions with dark borders on leaves, and mummifies berries into hard, black, shrivelled fruit. Spreads rapidly during wet periods from bud break through fruit set.",
+        "cultural_controls": [
+          "Remove all mummified fruit from the vine and the vineyard floor before bud break",
+          "Prune out infected wood and destroy prunings — do not leave them in the vineyard",
+          "Prune to open the canopy and promote rapid drying after rain",
+          "Avoid overhead irrigation; use drip irrigation where possible",
+          "Scout from bud break through veraison; the period from 2 weeks before bloom to 4 weeks after is most critical"
+        ],
+        "medications": [
+          {
+            "id": "grape_br_001",
+            "trade_name": "Mancozeb (various brands)",
+            "active_ingredient": "mancozeb",
+            "class": "dithiocarbamate (multi-site) fungicide",
+            "application_method": "foliar_spray",
+            "dosage_rate": "1.5–2 lb/100 gal water (see label for per-acre rates)",
+            "water_volume": "100–200 gal/acre (adjust for canopy size)",
+            "timing": "Begin applications at bud break (0.5-inch shoot) and continue on a 7–14 day schedule through the critical infection period (bloom through 4 weeks post-bloom). Protective only; apply before rain events.",
+            "reapplication_interval_days": 7,
+            "preharvest_interval_days": 66,
+            "max_applications_per_season": 8,
+            "notes": "Mancozeb is a protectant — it must be applied before infection. Do not exceed 8 applications or 24 lb/acre per season. Check label for state-specific restrictions.",
+            "research_source": "Penn State Extension — Black Rot of Grape",
+            "severity_threshold": "Preventive program; begin at bud break regardless of initial disease presence in high-risk vineyards"
+          },
+          {
+            "id": "grape_br_002",
+            "trade_name": "Revus Top",
+            "active_ingredient": "mandipropamid + difenoconazole",
+            "class": "CAA + triazole premix fungicide",
+            "application_method": "foliar_spray",
+            "dosage_rate": "7–8 fl oz/acre",
+            "water_volume": "75–150 gal/acre",
+            "timing": "Apply at 7–14 day intervals beginning at early shoot growth. Provides both protective and curative activity. Most critical window: 2 weeks before bloom through 4 weeks after bloom.",
+            "reapplication_interval_days": 14,
+            "preharvest_interval_days": 7,
+            "max_applications_per_season": 4,
+            "notes": "Do not make more than 2 sequential applications before rotating to a different mode of action. Maximum 4 applications per season.",
+            "research_source": "Penn State Extension — Grape Fungicide Programs",
+            "severity_threshold": "Use in rotation with mancozeb or captan during the high-risk bloom period"
+          }
+        ]
+      },
+      "Blight Grape Vine": {
+        "display_name": "Downy Mildew / Blight (Grape)",
+        "description": "Grape downy mildew (Plasmopara viticola) produces oily, angular yellow spots on the upper leaf surface with white downy sporulation beneath. Infected shoots, tendrils, and clusters can be stunted or killed in severe outbreaks.",
+        "cultural_controls": [
+          "Remove infected shoots and leaves during dry weather to reduce sporulation",
+          "Sanitise pruning tools between plants with 70% isopropyl alcohol",
+          "Improve canopy ventilation through shoot positioning, leaf removal, and hedging",
+          "Avoid overhead irrigation and minimise leaf wetness duration",
+          "Scout after rain events in warm weather (>50°F / 10°C); primary infection period is late spring to early summer"
+        ],
+        "medications": [
+          {
+            "id": "grape_dm_001",
+            "trade_name": "Ridomil Gold MZ",
+            "active_ingredient": "mefenoxam + mancozeb",
+            "class": "phenylamide + dithiocarbamate premix",
+            "application_method": "foliar_spray",
+            "dosage_rate": "2.5 lb/acre",
+            "water_volume": "75–150 gal/acre",
+            "timing": "Apply at early shoot growth (2–4 inch shoots) and again at early bloom. Systemic (mefenoxam) component provides curative activity; protectant (mancozeb) component provides contact protection.",
+            "reapplication_interval_days": 21,
+            "preharvest_interval_days": 66,
+            "max_applications_per_season": 3,
+            "notes": "Do not exceed 3 applications or rely solely on mefenoxam-containing products — resistance risk is high. Always use in rotation with non-phenylamide fungicides.",
+            "research_source": "Penn State Extension — Downy Mildew of Grape",
+            "severity_threshold": "Apply at first detection of oily spots on leaves or when 10 consecutive hours of leaf wetness occur at temperatures above 50°F following bud break"
+          },
+          {
+            "id": "grape_dm_002",
+            "trade_name": "Forum SC",
+            "active_ingredient": "dimethomorph",
+            "class": "CAA (cinnamic acid amide) fungicide",
+            "application_method": "foliar_spray",
+            "dosage_rate": "6 fl oz/acre",
+            "water_volume": "75–150 gal/acre",
+            "timing": "Apply on a 7–10 day schedule during periods of high downy mildew risk. Always tank-mix with a contact fungicide (e.g., mancozeb or captan) to reduce resistance risk.",
+            "reapplication_interval_days": 10,
+            "preharvest_interval_days": 7,
+            "max_applications_per_season": 4,
+            "notes": "Do not make more than 2 consecutive applications without rotating to a different fungicide class. Always use in a tank-mix.",
+            "research_source": "Penn State Extension — Grape Fungicide Programs / BASF product label",
+            "severity_threshold": "Use when downy mildew risk is high based on weather-based disease models or observed sporangia"
+          }
+        ]
+      }
+    }
+  }
+}
