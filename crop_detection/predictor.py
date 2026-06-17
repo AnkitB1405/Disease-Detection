@@ -39,6 +39,7 @@ class AnalysisResult:
     recommendation: str | None
     annotated_image: Image.Image
     output_path: Path
+    all_disease_detections: tuple[Detection, ...]  # raw post-threshold YOLO output before top-1 selection
 
 
 class ModelManager:
@@ -206,6 +207,7 @@ def analyze_image(image: Image.Image, manager: ModelManager) -> AnalysisResult:
     # Disease models were trained on color images, so retain the original input.
     disease_detections = run_inference(manager.disease_model(crop.name), image)
     disease = select_disease(crop.name, disease_detections)
+    # Preserve full detection list before top-1 selection for LLM context.
 
     annotated = image.copy()
     if crop.selected_detection:
@@ -238,6 +240,7 @@ def analyze_image(image: Image.Image, manager: ModelManager) -> AnalysisResult:
         recommendation=get_recommendation(disease.name),
         annotated_image=annotated,
         output_path=output_path,
+        all_disease_detections=tuple(disease_detections),
     )
 
 
