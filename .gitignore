@@ -6,4 +6,3 @@ __pycache__/
 outputs/*
 !outputs/.gitkeep
 *.zip
-tracking.db
