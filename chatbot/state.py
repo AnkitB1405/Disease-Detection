@@ -95,6 +95,20 @@ def append_message(session: CropSession, role: str, content: str) -> None:
     session.chat_history.append({"role": role, "content": content})
 
 
+_ASSISTANCE_NUDGE = "Do you need any more assistance?"
+
+
+def append_assistance_nudge(session: CropSession) -> None:
+    """Append the standard post-response follow-up nudge as an assistant message.
+
+    Called after every completed Groq response (initial treatment plan or
+    ongoing follow-up) so the farmer is invited to continue the conversation
+    or signal they're done. This is a plain chat message, not a Groq call —
+    it does not change chat_mode or trigger any state transition.
+    """
+    append_message(session, "assistant", _ASSISTANCE_NUDGE)
+
+
 def set_chat_mode(mode: ChatMode) -> None:
     import streamlit as st
     st.session_state.chat_mode = mode

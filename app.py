@@ -49,6 +49,7 @@ def streamlit_main() -> None:
         active_session,
         create_new_session,
         append_message,
+        append_assistance_nudge,
         set_chat_mode,
     )
     from chatbot import handlers
@@ -246,6 +247,9 @@ def streamlit_main() -> None:
                                 with st.chat_message("assistant"):
                                     full_response = st.write_stream(response_stream)
                                 append_message(session, "assistant", full_response)
+                                append_assistance_nudge(session)
+                                with st.chat_message("assistant"):
+                                    st.markdown(session.chat_history[-1]["content"])
                         except RuntimeError as exc:
                             st.error(str(exc))
                         finally:
@@ -370,6 +374,9 @@ def streamlit_main() -> None:
                         with st.chat_message("assistant"):
                             full_response = st.write_stream(response_stream)
                         append_message(session, "assistant", full_response)
+                        append_assistance_nudge(session)
+                        with st.chat_message("assistant"):
+                            st.markdown(session.chat_history[-1]["content"])
                 except RuntimeError as exc:
                     st.error(str(exc))
                 finally:
@@ -418,6 +425,9 @@ def streamlit_main() -> None:
                     with st.chat_message("assistant"):
                         full_response = st.write_stream(result)
                     append_message(session, "assistant", full_response)
+                    append_assistance_nudge(session)
+                    with st.chat_message("assistant"):
+                        st.markdown(session.chat_history[-1]["content"])
             except RuntimeError as exc:
                 st.error(str(exc))
             finally:
