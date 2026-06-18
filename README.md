@@ -282,3 +282,5 @@ Useful references:
 
 Always follow the pesticide label and local regulations. Product availability,
 timing, and legal uses vary by crop and region.
+
+Please give the repo a Star ⭐
