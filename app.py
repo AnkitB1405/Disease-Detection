@@ -40,6 +40,165 @@ def load_uploaded_image(uploaded_file) -> Image.Image:
     return image
 
 
+# ---------------------------------------------------------------------------
+# CSS injection
+# ---------------------------------------------------------------------------
+
+_CUSTOM_CSS = """
+<style>
+/* Landing page option cards */
+div[data-testid="stVerticalBlock"] .option-card-btn button {
+    border-radius: 12px;
+    padding: 28px 12px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    min-height: 110px;
+    transition: box-shadow 0.2s;
+}
+
+/* Detection result banner */
+.detection-banner {
+    background: linear-gradient(90deg, #1b3a1b 0%, #243d22 100%);
+    border-left: 4px solid #4caf50;
+    border-radius: 8px;
+    padding: 14px 20px;
+    margin-bottom: 10px;
+}
+.detection-banner h4 {
+    color: #a5d6a7;
+    margin: 0 0 6px 0;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+.detection-banner .crop-label {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #e8f5e9;
+}
+.detection-banner .conf-label {
+    font-size: 0.82rem;
+    color: #81c784;
+    margin-left: 6px;
+}
+.detection-banner .flag-text {
+    font-size: 0.78rem;
+    color: #ffcc80;
+    margin-top: 2px;
+}
+
+/* Past sessions card */
+.session-card {
+    border: 1px solid #2e4a2e;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    background: #0f1f0f;
+}
+</style>
+"""
+
+
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
+
+def _stream_to_str(raw) -> str:
+    """Normalise st.write_stream output (list[Any] | str | None) to plain str."""
+    if isinstance(raw, list):
+        return "".join(str(chunk) for chunk in raw)
+    return raw or ""
+
+
+def _is_result_unreliable(result) -> bool:
+    """Mirror the handlers.is_inconclusive check without importing to avoid circular deps."""
+    from chatbot.handlers import is_inconclusive
+    return is_inconclusive(result.all_disease_detections)
+
+
+def _render_detection_section(st, result, *, key_suffix: str, expanded: bool = True) -> None:
+    """Collapsible detection panel: annotated image + full results.
+
+    Rendered from ``session.analysis_result`` so it persists across reruns and
+    stays available for the whole session. The expander lets the user hide it.
+    """
+    label = f"🔬 Detection Result — {result.crop_name} / {result.disease_name}"
+    with st.expander(label, expanded=expanded):
+        if _is_result_unreliable(result):
+            st.warning("⚠️ Low confidence — the top detection scores are close; treat as tentative.")
+
+        col1, col2 = st.columns(2)
+        with col1:
+            st.metric("Crop", result.crop_name)
+            st.metric("Crop Confidence", f"{result.crop_confidence:.1%}")
+            if result.crop_was_assumed:
+                st.caption("Grape was assumed — no Corn detection found.")
+        with col2:
+            st.metric("Disease", result.disease_name)
+            st.metric("Disease Confidence", f"{result.disease_confidence:.1%}")
+            if result.disease_was_fallback:
+                st.caption("Healthy fallback — no qualifying disease detected.")
+
+        if result.all_disease_detections:
+            visible = [d for d in result.all_disease_detections if d.confidence > 0.05]
+            if visible:
+                st.caption("All class scores:")
+                for d in sorted(visible, key=lambda x: x.confidence, reverse=True):
+                    st.caption(f"  {d.class_name}: {d.confidence:.1%}")
+
+        st.image(result.annotated_image, caption="Annotated image", use_container_width=True)
+
+        buffer = io.BytesIO()
+        result.annotated_image.save(buffer, format="JPEG", quality=92)
+        st.download_button(
+            "Download Annotated Image",
+            data=buffer.getvalue(),
+            file_name=result.output_path.name,
+            mime="image/jpeg",
+            key=f"download_annotated_{key_suffix}",
+        )
+
+
+def _run_analysis_and_stream(st, result, user_note, session, handlers, append_message):
+    """Shared flow after inference: two-phase LLM → stream summary to chat."""
+    from chatbot.prompts import INCONCLUSIVE_WARNING
+
+    st.session_state.groq_thinking = True
+    try:
+        with st.spinner("Generating treatment plan from medication database..."):
+            analysis_resp = handlers.handle_image_analysis(result, user_note or "", session)
+
+        if analysis_resp.is_unreliable:
+            st.warning(INCONCLUSIVE_WARNING)
+
+        # Phase-1 result: medicine table already appended to history; display in current run
+        if analysis_resp.medicine_table_markdown:
+            with st.chat_message("assistant"):
+                st.markdown(analysis_resp.medicine_table_markdown)
+            if analysis_resp.auto_medicine_entries:
+                st.info(
+                    f"{len(analysis_resp.auto_medicine_entries)} medicine entr"
+                    f"{'y' if len(analysis_resp.auto_medicine_entries) == 1 else 'ies'} "
+                    "auto-added to your treatment table."
+                )
+
+        # Phase-2: stream crop condition summary
+        with st.chat_message("assistant"):
+            full_summary = _stream_to_str(st.write_stream(analysis_resp.summary_stream))
+        append_message(session, "assistant", full_summary)
+
+    except RuntimeError as exc:
+        st.error(str(exc))
+    finally:
+        st.session_state.groq_thinking = False
+
+    st.rerun()
+
+
+# ---------------------------------------------------------------------------
+# Main Streamlit app
+# ---------------------------------------------------------------------------
+
 def streamlit_main() -> None:
     import streamlit as st
     from streamlit_webrtc import VideoProcessorBase, WebRtcMode, webrtc_streamer
@@ -52,7 +211,6 @@ def streamlit_main() -> None:
         set_chat_mode,
     )
     from chatbot import handlers
-    from chatbot.prompts import INCONCLUSIVE_RESPONSE
     from crop_detection.predictor import (
         ModelLoadError,
         ModelManager,
@@ -62,12 +220,14 @@ def streamlit_main() -> None:
     )
     from crop_detection.disease_logic import select_crop
     from tracking.tracker_ui import render_tracking_panel
+    from tracking import persistence
 
     st.set_page_config(
         page_title="Crop Disease Detection",
         layout="wide",
         initial_sidebar_state="expanded",
     )
+    st.markdown(_CUSTOM_CSS, unsafe_allow_html=True)
 
     init_session_state()
 
@@ -79,11 +239,7 @@ def streamlit_main() -> None:
     # Sidebar — session management                                         #
     # ------------------------------------------------------------------ #
     with st.sidebar:
-        st.title("Crop Sessions")
-        st.caption(
-            "Each session tracks one crop field or plant. "
-            "Chat history lives in the browser tab; medicine logs are saved permanently."
-        )
+        st.title("Sessions")
 
         sessions: dict = st.session_state.crop_sessions
         session_names = {sid: s.display_name for sid, s in sessions.items()}
@@ -102,14 +258,15 @@ def streamlit_main() -> None:
             )
             if chosen != st.session_state.active_crop_session_id:
                 st.session_state.active_crop_session_id = chosen
-                set_chat_mode("ONBOARDING" if not sessions[chosen].disease_name else "ACTIVE_TREATMENT")
+                _s = st.session_state.crop_sessions.get(chosen)
+                set_chat_mode("ONBOARDING" if not (_s and _s.disease_name) else "ACTIVE_TREATMENT")
                 st.rerun()
 
         with st.expander("New Session", expanded=not sessions):
             new_name = st.text_input("Session name", placeholder="e.g. Corn Field A", key="new_session_name")
             if st.button("Create Session", type="primary", key="create_session_btn"):
                 name = new_name.strip() or f"Session {len(sessions) + 1}"
-                session = create_new_session(name)
+                create_new_session(name)
                 st.rerun()
 
         if sessions and st.session_state.active_crop_session_id:
@@ -119,7 +276,6 @@ def streamlit_main() -> None:
                 st.caption(f"Crop: {sess.crop_name or 'Not yet identified'}")
                 st.caption(f"Disease: {sess.disease_name or 'Not yet identified'}")
                 if st.button("Delete This Session", key="delete_session_btn"):
-                    from tracking import persistence
                     persistence.delete_session(sess.session_id)
                     del st.session_state.crop_sessions[sess.session_id]
                     st.session_state.active_crop_session_id = (
@@ -129,7 +285,7 @@ def streamlit_main() -> None:
                     st.rerun()
 
         st.divider()
-        st.caption("Single-user mode. See docs/MULTI_USER_UPGRADE.md for future multi-user support.")
+        st.caption("Single-user mode.")
 
     # ------------------------------------------------------------------ #
     # Main area                                                            #
@@ -137,14 +293,21 @@ def streamlit_main() -> None:
     session = active_session()
 
     if session is None:
-        st.title("Crop Disease Detection")
+        st.markdown("## Crop Disease Detection")
         st.info("Create a new session in the sidebar to get started.")
         return
 
-    st.title(f"Crop Disease Detection — {session.display_name}")
+    st.markdown(f"### {session.display_name}")
 
-    # Medicine tracking panel (persistent, always available after diagnosis)
-    if session.disease_name:
+    # Persistent, collapsible detection section — shown whenever a result is stored
+    if getattr(session, "analysis_result", None) is not None:
+        _render_detection_section(
+            st, session.analysis_result, key_suffix="persistent", expanded=True
+        )
+
+    # Medicine tracker expander (visible in ACTIVE_TREATMENT outside the dedicated page)
+    mode: str = st.session_state.chat_mode
+    if session.disease_name and mode not in ("MEDICINE_TABLE", "PAST_SESSIONS"):
         with st.expander("Medicine & Progress Tracker", expanded=st.session_state.show_medicine_panel):
             render_tracking_panel(session.session_id, session.disease_name)
 
@@ -154,33 +317,39 @@ def streamlit_main() -> None:
     for msg in session.chat_history:
         role = msg["role"]
         if role == "system":
-            continue  # system/summary messages are context only — not shown
-        with st.chat_message(role):
+            continue
+        display_role = msg.get("display_role", role)
+        with st.chat_message(display_role):
             st.markdown(msg["content"])
 
-    mode: str = st.session_state.chat_mode
-
     # ------------------------------------------------------------------ #
-    # ONBOARDING — three input mode buttons                                #
+    # ONBOARDING — 5-option landing page                                  #
     # ------------------------------------------------------------------ #
     if mode == "ONBOARDING":
-        st.subheader("How would you like to identify your crop's condition?")
-        col1, col2, col3 = st.columns(3, gap="large")
+        st.subheader("What would you like to do?")
+
+        # Row 1: three analysis entry points
+        col1, col2, col3 = st.columns(3, gap="medium")
 
         with col1:
-            if st.button("Upload Image", use_container_width=True, type="primary"):
+            st.markdown('<div class="option-card-btn">', unsafe_allow_html=True)
+            if st.button("📷  Upload Image", use_container_width=True, type="primary", key="ob_upload"):
                 set_chat_mode("AWAITING_UPLOAD")
                 st.rerun()
-            st.caption("Upload a photo of the affected leaf.")
+            st.markdown("</div>", unsafe_allow_html=True)
+            st.caption("Analyse a photo of an affected leaf.")
 
         with col2:
-            if st.button("Use Live Camera", use_container_width=True, type="primary"):
+            st.markdown('<div class="option-card-btn">', unsafe_allow_html=True)
+            if st.button("🎥  Live Feed", use_container_width=True, type="primary", key="ob_live"):
                 set_chat_mode("AWAITING_CAPTURE")
                 st.rerun()
-            st.caption("Capture a frame from your device camera.")
+            st.markdown("</div>", unsafe_allow_html=True)
+            st.caption("Use your device camera in real time.")
 
         with col3:
-            if st.button("Describe the Leaf", use_container_width=True, type="primary"):
+            st.markdown('<div class="option-card-btn">', unsafe_allow_html=True)
+            if st.button("📝  Describe Leaf", use_container_width=True, type="primary", key="ob_describe"):
                 opening = (
                     "No image available? No problem. I'll ask you a series of questions "
                     "about your crop and its symptoms. Please answer as specifically as you can — "
@@ -189,7 +358,29 @@ def streamlit_main() -> None:
                 append_message(session, "assistant", opening)
                 set_chat_mode("CLARIFYING")
                 st.rerun()
+            st.markdown("</div>", unsafe_allow_html=True)
             st.caption("Answer questions if you have no image.")
+
+        st.write("")
+
+        # Row 2: two management views
+        col4, col5 = st.columns(2, gap="medium")
+
+        with col4:
+            st.markdown('<div class="option-card-btn">', unsafe_allow_html=True)
+            if st.button("📋  Past Sessions", use_container_width=True, key="ob_past"):
+                set_chat_mode("PAST_SESSIONS")
+                st.rerun()
+            st.markdown("</div>", unsafe_allow_html=True)
+            st.caption("Review and switch between previous sessions.")
+
+        with col5:
+            st.markdown('<div class="option-card-btn">', unsafe_allow_html=True)
+            if st.button("💊  Medicine Table", use_container_width=True, key="ob_meds"):
+                set_chat_mode("MEDICINE_TABLE")
+                st.rerun()
+            st.markdown("</div>", unsafe_allow_html=True)
+            st.caption("View, edit, or delete treatment log entries.")
 
     # ------------------------------------------------------------------ #
     # AWAITING_UPLOAD — file uploader                                      #
@@ -231,27 +422,7 @@ def streamlit_main() -> None:
                                 st.error("Analysis failed. Check the terminal for details.")
                                 st.stop()
 
-                        _show_analysis_result(st, result)
-
-                        st.session_state.groq_thinking = True
-                        try:
-                            response_stream = handlers.handle_image_analysis(
-                                result, user_note or "", session
-                            )
-                            if isinstance(response_stream, str):
-                                # Inconclusive — string returned directly
-                                with st.chat_message("assistant"):
-                                    st.markdown(response_stream)
-                            else:
-                                with st.chat_message("assistant"):
-                                    full_response = st.write_stream(response_stream)
-                                append_message(session, "assistant", full_response)
-                        except RuntimeError as exc:
-                            st.error(str(exc))
-                        finally:
-                            st.session_state.groq_thinking = False
-
-                        st.rerun()
+                        _run_analysis_and_stream(st, result, user_note, session, handlers, append_message)
 
         if st.button("Back", key="upload_back"):
             set_chat_mode("ONBOARDING")
@@ -356,27 +527,8 @@ def streamlit_main() -> None:
                         st.error("Analysis failed. Check the terminal for details.")
                         st.stop()
 
-                _show_analysis_result(st, result)
-
-                st.session_state.groq_thinking = True
-                try:
-                    response_stream = handlers.handle_camera_analysis(
-                        result, user_note or "", session
-                    )
-                    if isinstance(response_stream, str):
-                        with st.chat_message("assistant"):
-                            st.markdown(response_stream)
-                    else:
-                        with st.chat_message("assistant"):
-                            full_response = st.write_stream(response_stream)
-                        append_message(session, "assistant", full_response)
-                except RuntimeError as exc:
-                    st.error(str(exc))
-                finally:
-                    st.session_state.groq_thinking = False
-
                 st.session_state.captured_frame = None
-                st.rerun()
+                _run_analysis_and_stream(st, result, user_note, session, handlers, append_message)
 
         if st.button("Back", key="capture_back"):
             set_chat_mode("ONBOARDING")
@@ -409,14 +561,12 @@ def streamlit_main() -> None:
 
                 from chatbot.clarification import ClarificationResult
                 if isinstance(result, ClarificationResult):
-                    # Clarification loop returned a question
                     question = result.question or "Could you provide more details about the symptoms?"
                     with st.chat_message("assistant"):
                         st.markdown(question)
                 else:
-                    # Streaming treatment/follow-up response
                     with st.chat_message("assistant"):
-                        full_response = st.write_stream(result)
+                        full_response = _stream_to_str(st.write_stream(result))
                     append_message(session, "assistant", full_response)
             except RuntimeError as exc:
                 st.error(str(exc))
@@ -433,40 +583,86 @@ def streamlit_main() -> None:
                 set_chat_mode("ONBOARDING")
                 st.rerun()
 
+    # ------------------------------------------------------------------ #
+    # PAST_SESSIONS — full session browser                                 #
+    # ------------------------------------------------------------------ #
+    elif mode == "PAST_SESSIONS":
+        st.subheader("Past Sessions")
 
-def _show_analysis_result(st, result) -> None:
-    """Display the YOLO detection metrics inline before the Groq response."""
-    with st.expander("Detection Details", expanded=True):
-        col1, col2 = st.columns(2)
-        with col1:
-            st.metric("Crop", result.crop_name)
-            st.metric("Crop Confidence", f"{result.crop_confidence:.1%}")
-            if result.crop_was_assumed:
-                st.caption("Grape was assumed — no Corn detection found.")
-        with col2:
-            st.metric("Disease", result.disease_name)
-            st.metric("Disease Confidence", f"{result.disease_confidence:.1%}")
-            if result.disease_was_fallback:
-                st.caption("Healthy fallback — no qualifying disease detected.")
+        all_sessions = st.session_state.crop_sessions
+        if not all_sessions:
+            st.info("No sessions yet. Create one from the sidebar.")
+        else:
+            for sid, sess in sorted(
+                all_sessions.items(),
+                key=lambda kv: kv[1].created_at,
+                reverse=True,
+            ):
+                med_entries = persistence.load_medicine_entries(sid)
+                is_active = (sid == st.session_state.active_crop_session_id)
 
-        if result.all_disease_detections:
-            visible = [d for d in result.all_disease_detections if d.confidence > 0.05]
-            if visible:
-                st.caption("All class scores:")
-                for d in sorted(visible, key=lambda x: x.confidence, reverse=True):
-                    st.caption(f"  {d.class_name}: {d.confidence:.1%}")
+                badge = " ✅ **Active**" if is_active else ""
+                with st.container():
+                    st.markdown(
+                        f"""
+<div class="session-card">
+  <strong>{sess.display_name}</strong>{badge}<br/>
+  <span style="color:#81c784">Crop:</span> {sess.crop_name or '—'} &nbsp;|&nbsp;
+  <span style="color:#81c784">Disease:</span> {sess.disease_name or '—'}<br/>
+  <span style="font-size:0.8rem;color:#666">
+    Created: {sess.created_at.strftime('%d %b %Y')} &nbsp;|&nbsp;
+    {len(med_entries)} medicine entr{'y' if len(med_entries) == 1 else 'ies'}
+  </span>
+</div>
+""",
+                        unsafe_allow_html=True,
+                    )
+                    btn_col1, btn_col2, _ = st.columns([1, 1, 4])
+                    with btn_col1:
+                        if not is_active and st.button(
+                            "Switch to this", key=f"switch_{sid}"
+                        ):
+                            st.session_state.active_crop_session_id = sid
+                            set_chat_mode(
+                                "ACTIVE_TREATMENT" if sess.disease_name else "ONBOARDING"
+                            )
+                            st.rerun()
+                    with btn_col2:
+                        if st.button("Delete", key=f"del_sess_{sid}"):
+                            persistence.delete_session(sid)
+                            del st.session_state.crop_sessions[sid]
+                            if st.session_state.active_crop_session_id == sid:
+                                st.session_state.active_crop_session_id = next(
+                                    iter(st.session_state.crop_sessions), None
+                                )
+                            set_chat_mode("ONBOARDING")
+                            st.rerun()
+                    st.write("")
 
-        st.image(result.annotated_image, caption="Annotated image", use_container_width=True)
+        if st.button("Back", key="past_sessions_back"):
+            set_chat_mode("ONBOARDING")
+            st.rerun()
 
-        buffer = io.BytesIO()
-        result.annotated_image.save(buffer, format="JPEG", quality=92)
-        st.download_button(
-            "Download Annotated Image",
-            data=buffer.getvalue(),
-            file_name=result.output_path.name,
-            mime="image/jpeg",
-        )
+    # ------------------------------------------------------------------ #
+    # MEDICINE_TABLE — focused medicine tracking panel                    #
+    # ------------------------------------------------------------------ #
+    elif mode == "MEDICINE_TABLE":
+        if not session.disease_name:
+            st.info(
+                "No diagnosis has been made for this session yet. "
+                "Analyse a crop image first, then return here to manage your treatment log."
+            )
+        else:
+            render_tracking_panel(session.session_id, session.disease_name)
 
+        if st.button("Back", key="med_table_back"):
+            set_chat_mode("ONBOARDING")
+            st.rerun()
+
+
+# ---------------------------------------------------------------------------
+# Runtime helpers
+# ---------------------------------------------------------------------------
 
 def _is_streamlit_runtime() -> bool:
     try:

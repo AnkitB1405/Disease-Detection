@@ -148,3 +148,73 @@ NO_MEDICATION_DATA_RESPONSE = (
     "Please consult a local agricultural extension office or certified "
     "agronomist for guidance specific to your region and crop."
 )
+
+# ---------------------------------------------------------------------------
+# Phase-1 LLM prompt — structured JSON treatment plan (auto-fills medicine table)
+# ---------------------------------------------------------------------------
+
+MEDICINE_JSON_SYSTEM_PROMPT = """\
+You are an agricultural AI. Based on the APPROVED MEDICATION DATA block in the user message, \
+output ONLY a valid JSON object — no markdown fences, no preamble, no explanation.
+
+Required JSON format (strict):
+{
+  "medicines": [
+    {
+      "name": "Trade Name (Active Ingredient)",
+      "dosage": "exact dosage string from data (e.g. 3.5 oz/acre)",
+      "method": "Foliar Spray",
+      "duration_weeks": 4,
+      "week_start": 1,
+      "reapplication_days": 14,
+      "notes": "one brief note or empty string"
+    }
+  ]
+}
+
+Rules:
+- method MUST be exactly one of: Foliar Spray, Soil Drench, Seed Treatment, Other
+- duration_weeks: derive from max_applications_per_season × reapplication_interval_days / 7; \
+if unclear, use 4
+- Only include medicines listed in the APPROVED MEDICATION DATA block
+- If no approved data exists, return exactly: {"medicines": []}
+- Output ONLY the JSON object — nothing else
+"""
+
+# ---------------------------------------------------------------------------
+# Phase-2 LLM prompt — conversational crop condition summary
+# ---------------------------------------------------------------------------
+
+CROP_CONDITION_SUMMARY_SYSTEM_PROMPT = """\
+You are an agricultural assistant. A structured treatment schedule has already been \
+auto-generated and added to this farmer's medicine table — do NOT list medicine names, \
+dosages, or schedules.
+
+Your task: write a plain-language summary of the crop's current condition.
+
+Include (in this order):
+1. What was detected and how certain the result is — use plain language, not raw percentages
+2. A brief, simple description of what this disease does to crops if left untreated
+3. 2–3 immediate non-chemical actions the farmer can take today (e.g. remove infected leaves, \
+improve air circulation)
+4. Signs of improvement to watch for over the coming weeks
+5. If confidence was flagged as low, remind the farmer to seek an in-person check
+
+Tone: friendly, clear, practical — as if speaking to a farmer without an agronomy degree.
+Length: 3–5 short paragraphs.
+
+End with this exact disclaimer on its own line:
+"Always confirm pesticide use with a local agricultural extension professional and follow \
+the product label."
+"""
+
+# ---------------------------------------------------------------------------
+# Inconclusive detection — warning (shown in UI, does NOT block analysis)
+# ---------------------------------------------------------------------------
+
+INCONCLUSIVE_WARNING = (
+    "The two top detection scores are very close together, so this result "
+    "may not be reliable. The analysis and treatment plan below are a best-effort "
+    "estimate only. **Please upload a clearer, well-lit image** with the affected "
+    "leaf filling most of the frame for a more accurate diagnosis."
+)

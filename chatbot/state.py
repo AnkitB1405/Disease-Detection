@@ -15,11 +15,13 @@ from tracking.models import CropSession
 from tracking import persistence
 
 ChatMode = Literal[
-    "ONBOARDING",       # user sees 3 input-mode buttons
+    "ONBOARDING",       # landing page with 5 navigation options
     "AWAITING_UPLOAD",  # file uploader is rendered
     "AWAITING_CAPTURE", # WebRTC streamer is rendered
     "CLARIFYING",       # text clarification loop is active
     "ACTIVE_TREATMENT", # confirmed detection, ongoing treatment chat
+    "PAST_SESSIONS",    # full list of all sessions
+    "MEDICINE_TABLE",   # focused medicine tracking panel
 ]
 
 

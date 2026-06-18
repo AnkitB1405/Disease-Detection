@@ -10,8 +10,8 @@ import os
 from collections.abc import Iterator
 from typing import Any
 
-_DEFAULT_MODEL = "llama3-70b-8192"
-_SUMMARIZE_MODEL = "llama3-8b-8192"  # smaller/faster for summarization
+_DEFAULT_MODEL = "llama-3.3-70b-versatile"
+_SUMMARIZE_MODEL = "llama-3.1-8b-instant"  # smaller/faster for summarization
 
 
 def _client():
@@ -62,16 +62,17 @@ def stream(
     Used for treatment plan responses so the farmer sees tokens as they arrive.
     """
     full_messages = [{"role": "system", "content": system_prompt}] + messages
-    with _client().chat.completions.stream(
+    stream_resp = _client().chat.completions.create(
         model=model,
         messages=full_messages,
         temperature=0.3,
         max_tokens=2048,
-    ) as s:
-        for chunk in s:
-            delta = chunk.choices[0].delta.content
-            if delta:
-                yield delta
+        stream=True,
+    )
+    for chunk in stream_resp:
+        delta = chunk.choices[0].delta.content
+        if delta:
+            yield delta
 
 
 def summarize(

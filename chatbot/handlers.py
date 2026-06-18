@@ -1,41 +1,67 @@
 """Message routing, inconclusiveness checks, and Groq call orchestration.
 
-Three public entry points:
-  handle_image_analysis(result, user_message, session) -> str | Iterator[str]
-  handle_camera_analysis(result, user_message, session) -> str | Iterator[str]
-  handle_text_message(user_text, session) -> ClarificationResult | Iterator[str]
+Public entry points:
+  handle_image_analysis(result, user_message, session)  -> AnalysisResponse
+  handle_camera_analysis(result, user_message, session) -> AnalysisResponse
+  handle_text_message(user_text, session)               -> ClarificationResult | Iterator[str]
 
-All Groq calls happen here in the main Streamlit thread.
-The VideoProcessor never calls into this module.
+An AnalysisResponse carries:
+  - is_unreliable         : bool — detection confidences were too close
+  - auto_medicine_entries : list[MedicineEntry] saved to the DB automatically
+  - medicine_table_markdown: str — pre-formatted markdown table for the chat
+  - summary_stream        : Iterator[str] — lazy Phase-2 Groq stream
+
+Phase 1 (blocking)  : JSON medicine plan  → parsed → saved → chat history entry added
+Phase 2 (streaming) : Crop condition summary → streamed by the caller via st.write_stream
 """
 
 from __future__ import annotations
 
 import json
+import logging
 from collections.abc import Iterator
+from datetime import date
 from pathlib import Path
+from typing import NamedTuple
+from uuid import uuid4
 
 from chatbot import groq_client, clarification, summarizer
 from chatbot.prompts import (
     TREATMENT_SYSTEM_PROMPT,
+    MEDICINE_JSON_SYSTEM_PROMPT,
+    CROP_CONDITION_SUMMARY_SYSTEM_PROMPT,
     ANALYSIS_USER_MESSAGE_TEMPLATE,
     TEXT_PATH_USER_MESSAGE_TEMPLATE,
-    INCONCLUSIVE_RESPONSE,
     NO_MEDICATION_DATA_RESPONSE,
+    INCONCLUSIVE_WARNING,
 )
 from chatbot.clarification import ClarificationResult
 from chatbot.state import append_message, set_chat_mode, update_session_crop_disease
 from crop_detection.disease_logic import Detection
-from tracking.models import CropSession
+from tracking import persistence
+from tracking.models import CropSession, MedicineEntry
+
+LOGGER = logging.getLogger(__name__)
 
 _MEDICATIONS_PATH = Path(__file__).resolve().parent.parent / "data" / "medications.json"
 _INCONCLUSIVENESS_TOP_CONF_THRESHOLD = 0.50
 _INCONCLUSIVENESS_GAP_THRESHOLD = 0.15
-_DETECTION_DISPLAY_THRESHOLD = 0.15   # only show detections above this in Groq prompt
+_DETECTION_DISPLAY_THRESHOLD = 0.15
 
 
 # ---------------------------------------------------------------------------
-# Inconclusiveness check
+# Return type for image / camera analysis
+# ---------------------------------------------------------------------------
+
+class AnalysisResponse(NamedTuple):
+    is_unreliable: bool
+    auto_medicine_entries: list          # list[MedicineEntry]
+    medicine_table_markdown: str         # pre-formatted markdown; empty if no medicines
+    summary_stream: Iterator[str]        # lazy Phase-2 Groq stream
+
+
+# ---------------------------------------------------------------------------
+# Inconclusiveness check (now a WARNING flag, not a hard blocker)
 # ---------------------------------------------------------------------------
 
 def is_inconclusive(all_detections: tuple[Detection, ...]) -> bool:
@@ -60,10 +86,6 @@ def is_inconclusive(all_detections: tuple[Detection, ...]) -> bool:
 # ---------------------------------------------------------------------------
 
 def _load_medication_block(crop_name: str, disease_canonical: str) -> str:
-    """Return a formatted medication block for the Groq prompt.
-
-    Falls back to NO_MEDICATION_DATA_RESPONSE string if no entry found.
-    """
     if not _MEDICATIONS_PATH.is_file():
         return NO_MEDICATION_DATA_RESPONSE
 
@@ -124,18 +146,102 @@ def _format_all_detections(all_detections: tuple[Detection, ...]) -> str:
 
 
 # ---------------------------------------------------------------------------
+# Phase-1: Parse JSON medicine plan and persist entries
+# ---------------------------------------------------------------------------
+
+_VALID_METHODS = {"Foliar Spray", "Soil Drench", "Seed Treatment", "Other"}
+
+
+def _parse_and_save_medicines(
+    json_raw: str,
+    session_id: str,
+) -> tuple[list[MedicineEntry], str]:
+    """Parse the JSON medicine plan from Phase-1 LLM call.
+
+    Returns (saved_entries, markdown_table_string).
+    On any parse error returns ([], "").
+    """
+    try:
+        data = json.loads(json_raw.strip())
+        medicines = data.get("medicines", [])
+    except (json.JSONDecodeError, AttributeError, ValueError):
+        LOGGER.warning("Phase-1 LLM returned non-JSON: %.200s", json_raw)
+        return [], ""
+
+    if not medicines:
+        return [], ""
+
+    entries: list[MedicineEntry] = []
+    today = date.today()
+
+    for med in medicines:
+        name = str(med.get("name", "")).strip()
+        if not name:
+            continue
+        method_raw = str(med.get("method", "Other")).strip()
+        method = method_raw if method_raw in _VALID_METHODS else "Other"
+        entry = MedicineEntry(
+            entry_id=str(uuid4()),
+            session_id=session_id,
+            week_number=int(med.get("week_start", 1)),
+            date_applied=today,
+            medicine_id="auto_llm",
+            medicine_name=name,
+            dosage_applied=str(med.get("dosage", "")).strip(),
+            application_method=method,
+            symptom_severity=3,
+            notes=str(med.get("notes", "")).strip(),
+            is_improving=None,
+        )
+        persistence.save_medicine_entry(entry)
+        entries.append(entry)
+
+    if not entries:
+        return [], ""
+
+    # Build a readable markdown table for the chat message
+    lines = [
+        "**Treatment Plan Auto-Generated**",
+        "",
+        "The following medicines have been added to your treatment table automatically. "
+        "You can edit or delete them in the Medicine Table.",
+        "",
+        "| Medicine | Dosage | Method | Duration | Notes |",
+        "|----------|--------|--------|----------|-------|",
+    ]
+    for med in medicines:
+        name = str(med.get("name", "—"))
+        dosage = str(med.get("dosage", "—"))
+        method = str(med.get("method", "—"))
+        duration = f"{med.get('duration_weeks', '?')} wks"
+        notes = str(med.get("notes", ""))
+        # Escape pipe characters to avoid breaking the markdown table
+        def _esc(s: str) -> str:
+            return s.replace("|", "\\|")
+        lines.append(f"| {_esc(name)} | {_esc(dosage)} | {_esc(method)} | {_esc(duration)} | {_esc(notes)} |")
+
+    return entries, "\n".join(lines)
+
+
+# ---------------------------------------------------------------------------
 # Image analysis handlers (upload and camera share the same core)
 # ---------------------------------------------------------------------------
 
 def _handle_analysis_common(
-    result,  # AnalysisResult
+    result,          # AnalysisResult
     user_message: str,
     session: CropSession,
-) -> str | Iterator[str]:
-    """Shared logic for both upload and camera-capture paths."""
-    if is_inconclusive(result.all_disease_detections):
-        append_message(session, "assistant", INCONCLUSIVE_RESPONSE)
-        return INCONCLUSIVE_RESPONSE
+) -> AnalysisResponse:
+    """Two-phase LLM flow for both upload and camera paths.
+
+    Phase 1 (blocking): JSON medicine plan → parsed → saved to DB → appended to history.
+    Phase 2 (lazy):     Crop condition summary stream returned to caller.
+    Inconclusive detections raise a warning flag but do NOT block analysis.
+    """
+    unreliable = is_inconclusive(result.all_disease_detections)
+
+    # Persist the raw AnalysisResult on the session for the detection card
+    session.analysis_result = result
 
     crop_assumption_note = (
         "\n(Grape was assumed — no Corn detection found)"
@@ -145,9 +251,12 @@ def _handle_analysis_common(
         "\n(Healthy fallback applied — no qualifying disease detected)"
         if result.disease_was_fallback else ""
     )
+    unreliable_note = (
+        "\n\nIMPORTANT: Detection confidence is LOW — the top two scores are very close. "
+        "Treat this result as tentative and advise the farmer to seek confirmation."
+        if unreliable else ""
+    )
 
-    # disease_name here is the display name; we need the canonical name for the DB lookup.
-    # We reverse-map via the internal name stored in result.
     medication_block = _load_medication_block(
         result.crop_name,
         _canonical_disease_key(result.crop_name, result.disease_name),
@@ -162,23 +271,57 @@ def _handle_analysis_common(
         fallback_note=fallback_note,
         all_detections_block=_format_all_detections(result.all_disease_detections),
         medication_block=medication_block,
-        user_message=user_message or "Please explain the results and provide a treatment plan.",
+        user_message=(user_message or "Please explain the results and provide a treatment plan.")
+                     + unreliable_note,
     )
 
-    append_message(session, "user", user_msg_content)
+    # Store as "user" so the LLM sees the correct conversation role,
+    # but display_role="assistant" so the UI shows the assistant icon —
+    # this message is system-assembled, not typed by the farmer.
+    session.chat_history.append({
+        "role": "user",
+        "display_role": "assistant",
+        "content": user_msg_content,
+    })
     update_session_crop_disease(session, result.crop_name, result.disease_name)
     set_chat_mode("ACTIVE_TREATMENT")
 
-    messages = summarizer.messages_for_groq(session)
-    response_iter = groq_client.stream(messages, TREATMENT_SYSTEM_PROMPT)
-    return response_iter
+    # ------------------------------------------------------------------
+    # Phase 1: JSON medicine plan (blocking)
+    # ------------------------------------------------------------------
+    auto_entries: list[MedicineEntry] = []
+    medicine_table_md = ""
+    try:
+        messages_p1 = summarizer.messages_for_groq(session)
+        json_raw = groq_client.complete(messages_p1, MEDICINE_JSON_SYSTEM_PROMPT)
+        auto_entries, medicine_table_md = _parse_and_save_medicines(
+            json_raw, session.session_id
+        )
+    except Exception:
+        LOGGER.exception("Phase-1 medicine JSON call failed")
+
+    if medicine_table_md:
+        append_message(session, "assistant", medicine_table_md)
+
+    # ------------------------------------------------------------------
+    # Phase 2: Summary stream (lazy — Groq connection opens when iterated)
+    # ------------------------------------------------------------------
+    messages_p2 = summarizer.messages_for_groq(session)
+    summary_iter = groq_client.stream(messages_p2, CROP_CONDITION_SUMMARY_SYSTEM_PROMPT)
+
+    return AnalysisResponse(
+        is_unreliable=unreliable,
+        auto_medicine_entries=auto_entries,
+        medicine_table_markdown=medicine_table_md,
+        summary_stream=summary_iter,
+    )
 
 
-def handle_image_analysis(result, user_message: str, session: CropSession):
+def handle_image_analysis(result, user_message: str, session: CropSession) -> AnalysisResponse:
     return _handle_analysis_common(result, user_message, session)
 
 
-def handle_camera_analysis(result, user_message: str, session: CropSession):
+def handle_camera_analysis(result, user_message: str, session: CropSession) -> AnalysisResponse:
     return _handle_analysis_common(result, user_message, session)
 
 
@@ -190,11 +333,7 @@ def handle_text_message(
     user_text: str,
     session: CropSession,
 ) -> ClarificationResult | Iterator[str]:
-    """Process one turn in the clarification loop or ongoing treatment chat.
-
-    In CLARIFYING mode:  returns a ClarificationResult.
-    In ACTIVE_TREATMENT: returns a streaming Groq response.
-    """
+    """Process one turn in the clarification loop or ongoing treatment chat."""
     import streamlit as st
 
     mode = st.session_state.get("chat_mode", "CLARIFYING")
@@ -202,10 +341,12 @@ def handle_text_message(
     if mode == "ACTIVE_TREATMENT":
         return _handle_followup(user_text, session)
 
-    # CLARIFYING mode
     append_message(session, "user", user_text)
 
-    failures = session.clarification_state.get("consecutive_failures", 0) if session.clarification_state else 0
+    failures = (
+        session.clarification_state.get("consecutive_failures", 0)
+        if session.clarification_state else 0
+    )
     result = clarification.process_turn(
         messages=list(session.chat_history),
         consecutive_failures=failures,
@@ -219,7 +360,6 @@ def handle_text_message(
     session.clarification_state = {"consecutive_failures": failures}
 
     if result.resolved:
-        # Transition to treatment
         med_block = _load_medication_block(
             result.crop_type or "",
             _canonical_disease_from_symptoms(result.symptoms_summary or ""),
@@ -257,7 +397,6 @@ def _handle_followup(user_text: str, session: CropSession) -> Iterator[str]:
 # ---------------------------------------------------------------------------
 
 def _canonical_disease_key(crop_name: str, display_name: str) -> str:
-    """Map display disease name back to the key used in medications.json."""
     _corn_map = {
         "Healthy": "healthy",
         "Gray Leaf Spot": "gray_leaf",
@@ -275,12 +414,6 @@ def _canonical_disease_key(crop_name: str, display_name: str) -> str:
 
 
 def _canonical_disease_from_symptoms(symptoms_summary: str) -> str:
-    """Best-effort disease key lookup from free-text symptom summary.
-
-    This is used only for the text path where no YOLO data exists.
-    The medication block will be empty if no match is found, and the LLM
-    is instructed to say so rather than guessing.
-    """
     lower = symptoms_summary.lower()
     if "rust" in lower:
         return "rust"
@@ -292,4 +425,4 @@ def _canonical_disease_from_symptoms(symptoms_summary: str) -> str:
         return "Black Rot Grape Vine"
     if "blight" in lower and "grape" in lower:
         return "Blight Grape Vine"
-    return ""  # empty → no medication data → LLM defers to extension professional
+    return ""

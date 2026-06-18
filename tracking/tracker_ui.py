@@ -113,10 +113,16 @@ def _render_add_entry_form(
 
 
 def _render_table(session_id: str, entries: list[MedicineEntry]) -> None:
+    """Render an editable treatment log table with inline edit and delete support."""
     import streamlit as st
 
     st.markdown("**Treatment Log**")
+    st.caption(
+        "Edit cells directly in the table below. "
+        "Use the **Delete selected entries** section to remove rows."
+    )
 
+    # Build display dataframe (entry_id kept as index for reconciliation)
     rows = []
     for e in entries:
         improving_display = (
@@ -136,9 +142,100 @@ def _render_table(session_id: str, entries: list[MedicineEntry]) -> None:
             "Notes": e.notes,
         })
 
-    df = pd.DataFrame(rows)
-    display_df = df.drop(columns=["entry_id"])
-    st.dataframe(display_df, use_container_width=True, hide_index=True)
+    original_df = pd.DataFrame(rows)
+    editor_key = f"med_editor_{session_id}"
+
+    edited_df = st.data_editor(
+        original_df.drop(columns=["entry_id"]),
+        use_container_width=True,
+        hide_index=True,
+        num_rows="fixed",
+        column_config={
+            "Week": st.column_config.NumberColumn("Week #", min_value=1, step=1),
+            "Date": st.column_config.TextColumn("Date (YYYY-MM-DD)"),
+            "Method": st.column_config.SelectboxColumn(
+                "Method",
+                options=["Foliar Spray", "Soil Drench", "Seed Treatment", "Other"],
+            ),
+            "Severity (1–5)": st.column_config.NumberColumn(
+                "Severity (1–5)", min_value=1, max_value=5, step=1
+            ),
+            "Improving?": st.column_config.SelectboxColumn(
+                "Improving?",
+                options=["Yes", "No", "Too early"],
+            ),
+        },
+        key=editor_key,
+    )
+
+    if st.button("Save edits", type="primary", key=f"save_edits_{session_id}"):
+        _apply_edits(original_df, edited_df, entries)
+        st.success("Changes saved.")
+        st.rerun()
+
+    # -- Delete section -------------------------------------------------------
+    st.markdown("**Delete entries**")
+    entry_labels = [
+        f"Week {e.week_number} — {e.medicine_name} ({e.date_applied.isoformat()})"
+        for e in entries
+    ]
+    entry_id_by_label = {
+        label: e.entry_id for label, e in zip(entry_labels, entries)
+    }
+    selected_labels = st.multiselect(
+        "Select entries to delete",
+        options=entry_labels,
+        key=f"del_select_{session_id}",
+    )
+    if selected_labels and st.button(
+        f"Delete {len(selected_labels)} selected",
+        type="secondary",
+        key=f"del_confirm_{session_id}",
+    ):
+        for label in selected_labels:
+            persistence.delete_medicine_entry(entry_id_by_label[label])
+        st.success(f"Deleted {len(selected_labels)} entr{'y' if len(selected_labels) == 1 else 'ies'}.")
+        st.rerun()
+
+
+def _apply_edits(
+    original_df: pd.DataFrame,
+    edited_df: pd.DataFrame,
+    entries: list[MedicineEntry],
+) -> None:
+    """Persist any rows the user changed in the data_editor."""
+    improving_map = {"Yes": True, "No": False, "Too early": None}
+
+    for i, (orig_row, edit_row) in enumerate(
+        zip(original_df.drop(columns=["entry_id"]).itertuples(index=False),
+            edited_df.itertuples(index=False))
+    ):
+        if orig_row == edit_row:
+            continue  # no change for this row
+
+        entry = entries[i]
+        try:
+            parsed_date = date.fromisoformat(str(edit_row._asdict().get("Date", entry.date_applied.isoformat())))
+        except ValueError:
+            parsed_date = entry.date_applied
+
+        row_dict = edit_row._asdict()
+        updated = MedicineEntry(
+            entry_id=entry.entry_id,
+            session_id=entry.session_id,
+            week_number=int(row_dict.get("Week", entry.week_number)),
+            date_applied=parsed_date,
+            medicine_id=entry.medicine_id,
+            medicine_name=str(row_dict.get("Medicine", entry.medicine_name)),
+            dosage_applied=str(row_dict.get("Dosage", entry.dosage_applied)),
+            application_method=str(row_dict.get("Method", entry.application_method)),
+            symptom_severity=int(row_dict.get("Severity (1–5)", entry.symptom_severity)),
+            notes=str(row_dict.get("Notes", entry.notes)),
+            is_improving=improving_map.get(
+                str(row_dict.get("Improving?", "Too early")), None
+            ),
+        )
+        persistence.save_medicine_entry(updated)
 
 
 def _render_sparkline(entries: list[MedicineEntry]) -> None:

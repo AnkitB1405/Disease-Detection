@@ -63,4 +63,4 @@ def maybe_summarize(session: CropSession) -> bool:
 def messages_for_groq(session: CropSession) -> list[dict]:
     """Return the message list to send to Groq, triggering summarization first."""
     maybe_summarize(session)
-    return list(session.chat_history)
+    return [{"role": m["role"], "content": m["content"]} for m in session.chat_history]
