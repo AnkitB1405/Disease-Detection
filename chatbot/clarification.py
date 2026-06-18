@@ -56,7 +56,7 @@ def process_turn(
     raw = groq_client.complete(
         messages=messages,
         system_prompt=CLARIFICATION_SYSTEM_PROMPT,
-        model="llama-3.3-70b-versatile",
+        model="llama3-70b-8192",
     )
 
     return _parse_response(raw)

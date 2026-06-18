@@ -49,7 +49,6 @@ def streamlit_main() -> None:
         active_session,
         create_new_session,
         append_message,
-        append_assistance_nudge,
         set_chat_mode,
     )
     from chatbot import handlers
@@ -156,9 +155,8 @@ def streamlit_main() -> None:
         role = msg["role"]
         if role == "system":
             continue  # system/summary messages are context only — not shown
-        shown = msg.get("display_content", msg["content"])
         with st.chat_message(role):
-            st.markdown(shown)
+            st.markdown(msg["content"])
 
     mode: str = st.session_state.chat_mode
 
@@ -248,18 +246,8 @@ def streamlit_main() -> None:
                                 with st.chat_message("assistant"):
                                     full_response = st.write_stream(response_stream)
                                 append_message(session, "assistant", full_response)
-                                _auto_fill_medicine_entry(session, full_response)
-                                append_assistance_nudge(session)
-                                with st.chat_message("assistant"):
-                                    st.markdown(session.chat_history[-1]["content"])
                         except RuntimeError as exc:
                             st.error(str(exc))
-                        except Exception:
-                            LOGGER.exception("Treatment plan generation failed (upload path)")
-                            st.error(
-                                "Something went wrong generating the treatment plan. "
-                                "Check the terminal for the full error."
-                            )
                         finally:
                             st.session_state.groq_thinking = False
 
@@ -382,18 +370,8 @@ def streamlit_main() -> None:
                         with st.chat_message("assistant"):
                             full_response = st.write_stream(response_stream)
                         append_message(session, "assistant", full_response)
-                        _auto_fill_medicine_entry(session, full_response)
-                        append_assistance_nudge(session)
-                        with st.chat_message("assistant"):
-                            st.markdown(session.chat_history[-1]["content"])
                 except RuntimeError as exc:
                     st.error(str(exc))
-                except Exception:
-                    LOGGER.exception("Treatment plan generation failed (camera path)")
-                    st.error(
-                        "Something went wrong generating the treatment plan. "
-                        "Check the terminal for the full error."
-                    )
                 finally:
                     st.session_state.groq_thinking = False
 
@@ -427,7 +405,6 @@ def streamlit_main() -> None:
 
             st.session_state.groq_thinking = True
             try:
-                mode_before = st.session_state.chat_mode
                 result = handlers.handle_text_message(user_input, session)
 
                 from chatbot.clarification import ClarificationResult
@@ -441,23 +418,8 @@ def streamlit_main() -> None:
                     with st.chat_message("assistant"):
                         full_response = st.write_stream(result)
                     append_message(session, "assistant", full_response)
-                    just_became_active = (
-                        mode_before == "CLARIFYING"
-                        and st.session_state.chat_mode == "ACTIVE_TREATMENT"
-                    )
-                    if just_became_active:
-                        _auto_fill_medicine_entry(session, full_response)
-                    append_assistance_nudge(session)
-                    with st.chat_message("assistant"):
-                        st.markdown(session.chat_history[-1]["content"])
             except RuntimeError as exc:
                 st.error(str(exc))
-            except Exception:
-                LOGGER.exception("Chat follow-up failed")
-                st.error(
-                    "Something went wrong generating a response. "
-                    "Check the terminal for the full error."
-                )
             finally:
                 st.session_state.groq_thinking = False
 
@@ -470,68 +432,6 @@ def streamlit_main() -> None:
                 session.clarification_state = None
                 set_chat_mode("ONBOARDING")
                 st.rerun()
-
-
-def _auto_fill_medicine_entry(session, treatment_plan_text: str) -> None:
-    """Auto-create week-1 medicine log entries from the first treatment plan.
-
-    Scans the LLM's response for trade names that appear in medications.json
-    for this session's crop+disease, and saves one MedicineEntry per match
-    directly to the database — no review step. Only runs if no entries exist
-    yet for this session (so it never overwrites or duplicates on reruns or
-    later follow-up messages).
-
-    Each auto-created entry uses the dosage_rate already approved in
-    medications.json (not anything parsed from the LLM's prose), and is
-    clearly marked in its notes as auto-generated so the farmer knows to
-    confirm or correct symptom severity and progress manually.
-
-    Any failure here is caught and logged rather than raised, so a problem
-    in the optional auto-fill step never breaks the chat response itself.
-    """
-    from datetime import date
-    from uuid import uuid4
-
-    from chatbot import handlers
-    from tracking import persistence
-    from tracking.models import MedicineEntry
-
-    try:
-        if not session.crop_name or not session.disease_name:
-            return
-
-        existing = persistence.load_medicine_entries(session.session_id)
-        if existing:
-            return  # automation only fires once, for the very first treatment plan
-
-        disease_key = handlers._canonical_disease_key(session.crop_name, session.disease_name)
-        matched_meds = handlers.find_mentioned_medications(
-            session.crop_name, disease_key, treatment_plan_text
-        )
-        if not matched_meds:
-            return
-
-        for med in matched_meds:
-            entry = MedicineEntry(
-                entry_id=str(uuid4()),
-                session_id=session.session_id,
-                week_number=1,
-                date_applied=date.today(),
-                medicine_id=med.get("id", "auto"),
-                medicine_name=med.get("trade_name", "Unknown"),
-                dosage_applied=med.get("dosage_rate", ""),
-                application_method=med.get("application_method", "foliar_spray").replace("_", " ").title(),
-                symptom_severity=3,
-                notes=(
-                    "Auto-filled from the treatment plan recommendation. "
-                    "Please confirm the dosage and update symptom severity / "
-                    "progress once you've applied it."
-                ),
-                is_improving=None,
-            )
-            persistence.save_medicine_entry(entry)
-    except Exception:
-        LOGGER.exception("Medicine tracker auto-fill failed — continuing without it")
 
 
 def _show_analysis_result(st, result) -> None:

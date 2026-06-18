@@ -10,7 +10,7 @@ import os
 from collections.abc import Iterator
 from typing import Any
 
-_DEFAULT_MODEL = "llama-3.3-70b-versatile"
+_DEFAULT_MODEL = "llama3-70b-8192"
 _SUMMARIZE_MODEL = "llama3-8b-8192"  # smaller/faster for summarization
 
 
@@ -60,24 +60,18 @@ def stream(
 
     Pass the returned iterator directly to st.write_stream() in the UI layer.
     Used for treatment plan responses so the farmer sees tokens as they arrive.
-
-    Uses create(..., stream=True), which returns a plain iterator of chunks.
-    This works across all groq SDK versions — the newer context-manager-style
-    `.chat.completions.stream(...)` helper is not available on every version
-    and was raising AttributeError, silently breaking all streaming responses.
     """
     full_messages = [{"role": "system", "content": system_prompt}] + messages
-    completion = _client().chat.completions.create(
+    with _client().chat.completions.stream(
         model=model,
         messages=full_messages,
         temperature=0.3,
         max_tokens=2048,
-        stream=True,
-    )
-    for chunk in completion:
-        delta = chunk.choices[0].delta.content
-        if delta:
-            yield delta
+    ) as s:
+        for chunk in s:
+            delta = chunk.choices[0].delta.content
+            if delta:
+                yield delta
 
 
 def summarize(
