@@ -60,18 +60,24 @@ def stream(
 
     Pass the returned iterator directly to st.write_stream() in the UI layer.
     Used for treatment plan responses so the farmer sees tokens as they arrive.
+
+    Uses create(..., stream=True), which returns a plain iterator of chunks.
+    This works across all groq SDK versions — the newer context-manager-style
+    `.chat.completions.stream(...)` helper is not available on every version
+    and was raising AttributeError, silently breaking all streaming responses.
     """
     full_messages = [{"role": "system", "content": system_prompt}] + messages
-    with _client().chat.completions.stream(
+    completion = _client().chat.completions.create(
         model=model,
         messages=full_messages,
         temperature=0.3,
         max_tokens=2048,
-    ) as s:
-        for chunk in s:
-            delta = chunk.choices[0].delta.content
-            if delta:
-                yield delta
+        stream=True,
+    )
+    for chunk in completion:
+        delta = chunk.choices[0].delta.content
+        if delta:
+            yield delta
 
 
 def summarize(

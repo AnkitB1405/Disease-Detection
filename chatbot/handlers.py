@@ -123,6 +123,58 @@ def _format_all_detections(all_detections: tuple[Detection, ...]) -> str:
     return "\n".join(lines)
 
 
+def _load_medications_raw(crop_name: str, disease_canonical: str) -> list[dict]:
+    """Return the raw list of medication dicts for a crop+disease, or [].
+
+    Unlike _load_medication_block (which formats a string for the Groq prompt),
+    this returns the structured entries so other code (e.g. the medicine
+    tracker auto-fill) can match trade names and read dosage_rate directly.
+    """
+    if not _MEDICATIONS_PATH.is_file():
+        return []
+    try:
+        with open(_MEDICATIONS_PATH, encoding="utf-8") as f:
+            db = json.load(f)
+    except (json.JSONDecodeError, OSError):
+        return []
+
+    crop_key = crop_name.lower()
+    diseases = db.get("diseases", {}).get(crop_key, {})
+    entry = diseases.get(disease_canonical)
+    if not entry:
+        return []
+    return entry.get("medications", [])
+
+
+def find_mentioned_medications(
+    crop_name: str,
+    disease_canonical: str,
+    response_text: str,
+) -> list[dict]:
+    """Return medication dicts (from medications.json) whose trade_name appears
+    in the LLM's treatment-plan response text.
+
+    Used to auto-fill the medicine tracker right after a treatment plan streams
+    in — matches against only the medications already known for this crop and
+    disease, so unrelated trade names elsewhere in the file can't false-match.
+    """
+    meds = _load_medications_raw(crop_name, disease_canonical)
+    if not meds:
+        return []
+
+    lower_text = response_text.lower()
+    matched = []
+    for med in meds:
+        trade_name = med.get("trade_name", "")
+        if not trade_name:
+            continue
+        # Use the part before any parenthetical, e.g. "Mancozeb (various brands)" -> "Mancozeb"
+        primary_name = trade_name.split("(")[0].strip().lower()
+        if primary_name and primary_name in lower_text:
+            matched.append(med)
+    return matched
+
+
 # ---------------------------------------------------------------------------
 # Image analysis handlers (upload and camera share the same core)
 # ---------------------------------------------------------------------------
@@ -165,7 +217,15 @@ def _handle_analysis_common(
         user_message=user_message or "Please explain the results and provide a treatment plan.",
     )
 
-    append_message(session, "user", user_msg_content)
+    display_text = (
+        f"Analyzed image — detected **{result.crop_name}** "
+        f"with **{result.disease_name}** "
+        f"({result.disease_confidence:.0%} confidence)."
+    )
+    if user_message:
+        display_text += f"\n\n{user_message}"
+
+    append_message(session, "user", user_msg_content, display_content=display_text)
     update_session_crop_disease(session, result.crop_name, result.disease_name)
     set_chat_mode("ACTIVE_TREATMENT")
 
@@ -207,7 +267,7 @@ def handle_text_message(
 
     failures = session.clarification_state.get("consecutive_failures", 0) if session.clarification_state else 0
     result = clarification.process_turn(
-        messages=list(session.chat_history),
+        messages=[{"role": m["role"], "content": m["content"]} for m in session.chat_history],
         consecutive_failures=failures,
     )
 
@@ -230,7 +290,11 @@ def handle_text_message(
             medication_block=med_block,
             user_message="Please provide a treatment plan based on the above.",
         )
-        append_message(session, "user", treatment_content)
+        display_text = (
+            f"Based on what you've described — **{result.crop_type or 'Unknown crop'}**, "
+            f"{result.symptoms_summary or 'symptoms as described'} — here's a treatment plan."
+        )
+        append_message(session, "user", treatment_content, display_content=display_text)
         update_session_crop_disease(
             session,
             result.crop_type or "Unknown",

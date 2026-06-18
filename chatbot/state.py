@@ -90,9 +90,24 @@ def create_new_session(display_name: str) -> CropSession:
     return session
 
 
-def append_message(session: CropSession, role: str, content: str) -> None:
-    """Append one message to the session's in-memory chat history."""
-    session.chat_history.append({"role": role, "content": content})
+def append_message(
+    session: CropSession,
+    role: str,
+    content: str,
+    display_content: str | None = None,
+) -> None:
+    """Append one message to the session's in-memory chat history.
+
+    `content` is always what gets sent to Groq (full prompt/context).
+    `display_content`, if given, is what the UI renders instead of `content` —
+    used so long internal prompt templates (e.g. the YOLO analysis block) never
+    show up verbatim in the farmer-facing chat. If omitted, the UI falls back
+    to rendering `content` directly (e.g. for plain chat turns).
+    """
+    msg: dict = {"role": role, "content": content}
+    if display_content is not None:
+        msg["display_content"] = display_content
+    session.chat_history.append(msg)
 
 
 _ASSISTANCE_NUDGE = "Do you need any more assistance?"

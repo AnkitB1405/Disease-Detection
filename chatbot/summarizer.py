@@ -61,6 +61,11 @@ def maybe_summarize(session: CropSession) -> bool:
 
 
 def messages_for_groq(session: CropSession) -> list[dict]:
-    """Return the message list to send to Groq, triggering summarization first."""
+    """Return the message list to send to Groq, triggering summarization first.
+
+    Only `role` and `content` are sent — any UI-only fields (e.g. display_content,
+    used to show a shorter farmer-facing version of long internal prompts) are
+    stripped here so the Groq API never sees extra keys it doesn't expect.
+    """
     maybe_summarize(session)
-    return list(session.chat_history)
+    return [{"role": m["role"], "content": m["content"]} for m in session.chat_history]
