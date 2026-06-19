@@ -402,11 +402,6 @@ def streamlit_main() -> None:
                 with col_img:
                     st.image(image, use_container_width=True)
                 with col_action:
-                    user_note = st.text_input(
-                        "Add a note (optional)",
-                        placeholder="e.g. This is my east field corn",
-                        key="upload_note",
-                    )
                     if st.button("Analyse Image", type="primary", use_container_width=True, key="upload_analyse"):
                         with st.spinner("Running detection models..."):
                             try:
@@ -422,7 +417,7 @@ def streamlit_main() -> None:
                                 st.error("Analysis failed. Check the terminal for details.")
                                 st.stop()
 
-                        _run_analysis_and_stream(st, result, user_note, session, handlers, append_message)
+                        _run_analysis_and_stream(st, result, "", session, handlers, append_message)
 
         if st.button("Back", key="upload_back"):
             set_chat_mode("ONBOARDING")
