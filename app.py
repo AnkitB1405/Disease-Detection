@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import io
 import logging
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -16,6 +17,32 @@ PROJECT_ROOT = Path(__file__).resolve().parent
 ALLOWED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp"}
 MAX_UPLOAD_BYTES = 15 * 1024 * 1024
 LOGGER = logging.getLogger(__name__)
+
+
+def _load_dotenv(path: Path = PROJECT_ROOT / ".env") -> None:
+    """Load KEY=VALUE pairs from a .env file into os.environ.
+
+    Zero-dependency, so no extra pip install is needed. A real shell export
+    always wins — values already present in the environment are never replaced.
+    Supports comments (#), blank lines, optional `export ` prefixes, and quotes.
+    """
+    if not path.is_file():
+        return
+    for raw in path.read_text(encoding="utf-8").splitlines():
+        line = raw.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        if line.startswith("export "):
+            line = line[len("export "):]
+        key, _, value = line.partition("=")
+        key = key.strip()
+        value = value.strip().strip('"').strip("'")
+        if key and key not in os.environ:
+            os.environ[key] = value
+
+
+# Load .env as early as possible, before any module reads GROQ_API_KEY.
+_load_dotenv()
 
 
 def load_uploaded_image(uploaded_file) -> Image.Image:
@@ -159,6 +186,168 @@ def _render_detection_section(st, result, *, key_suffix: str, expanded: bool = T
         )
 
 
+def _model_class_names(model) -> list[str]:
+    """Return a disease model's class names as an ordered list (handles dict or list)."""
+    names = getattr(model, "names", None)
+    if isinstance(names, dict):
+        return [names[i] for i in sorted(names)]
+    if isinstance(names, (list, tuple)):
+        return list(names)
+    return []
+
+
+def _reset_feedback_state(st, image) -> None:
+    """Arm the two-stage feedback flow for a freshly analyzed image."""
+    st.session_state.final_image = image
+    st.session_state.feedback_stage = "crop"
+    st.session_state.correct_crop_choice = None
+    st.session_state.fb_summary = None
+    st.session_state.fb_last_retrain = None
+
+
+def _render_feedback_section(st, session, get_model_manager, get_feedback_manager) -> None:
+    """Two-stage live-learning feedback shown beneath the detection result.
+
+    Stage 1 confirms/corrects the crop; Stage 2 confirms/corrects the disease.
+    Disease buttons are derived from the loaded model's ``.names`` so they stay
+    in sync if the model is retrained. Every correction is persisted and triggers
+    an immediate background fine-tune of the affected model.
+    """
+    result = getattr(session, "analysis_result", None)
+    image = st.session_state.get("final_image")
+    if result is None or image is None:
+        return
+
+    stage = st.session_state.get("feedback_stage", "crop")
+    predicted_crop = result.crop_name
+    fb = get_feedback_manager()
+
+    st.markdown("#### Help improve the model")
+
+    # ---- Stage 1: crop -------------------------------------------------- #
+    if stage == "crop":
+        st.write("Was the crop identified correctly?")
+        other_crop = "Grape" if predicted_crop == "Corn" else "Corn"
+        c1, c2, c3 = st.columns(3)
+        with c1:
+            if st.button(f"✅ Yes, {predicted_crop}", key="fb_crop_yes", use_container_width=True):
+                st.session_state.correct_crop_choice = predicted_crop
+                st.session_state.feedback_stage = "disease"
+                st.rerun()
+        with c2:
+            if st.button(f"❌ No, it's {other_crop}", key="fb_crop_no", use_container_width=True):
+                fb.save(image, correct_crop=other_crop, predicted_crop=predicted_crop)
+                st.session_state.fb_last_retrain = fb.maybe_trigger_retrain("crop")
+                st.session_state.correct_crop_choice = other_crop
+                st.session_state.feedback_stage = "disease"
+                st.rerun()
+        with c3:
+            if st.button("⏭️ Skip", key="fb_crop_skip", use_container_width=True):
+                st.session_state.feedback_stage = "skipped"
+                st.rerun()
+        return
+
+    # ---- Skipped -------------------------------------------------------- #
+    if stage == "skipped":
+        st.caption("Skipped.")
+        return
+
+    # ---- Stage 2: disease ----------------------------------------------- #
+    if stage == "disease":
+        correct_crop = st.session_state.get("correct_crop_choice") or predicted_crop
+        try:
+            names = _model_class_names(get_model_manager().disease_model(correct_crop))
+        except Exception:
+            LOGGER.exception("Could not read disease model class names")
+            names = []
+
+        st.write(f"What disease does this {correct_crop.lower()} leaf have?")
+
+        if not names:
+            st.warning("Could not load disease classes from the model. Skipping disease feedback.")
+            if st.button("OK", key="fb_disease_nomodel"):
+                st.session_state.feedback_stage = "skipped"
+                st.rerun()
+            return
+
+        crop_action = "you confirmed" if correct_crop == predicted_crop else "you corrected"
+
+        # One button per real model class, laid out three per row.
+        for row_start in range(0, len(names), 3):
+            row_names = names[row_start:row_start + 3]
+            cols = st.columns(len(row_names))
+            for col, name in zip(cols, row_names):
+                idx = names.index(name)
+                with col:
+                    if st.button(name, key=f"fb_disease_{idx}", use_container_width=True):
+                        fb.save(
+                            image,
+                            correct_crop=correct_crop,
+                            predicted_crop=predicted_crop,
+                            correct_disease=name,
+                            predicted_disease=result.disease_name,
+                            disease_unknown=False,
+                            disease_class_index=idx,
+                        )
+                        st.session_state.fb_last_retrain = fb.maybe_trigger_retrain(
+                            "disease", disease_crop=correct_crop, class_names=names
+                        )
+                        disease_action = (
+                            "you confirmed"
+                            if name == result.disease_name
+                            else "you corrected"
+                        )
+                        st.session_state.fb_summary = {
+                            "crop": correct_crop,
+                            "crop_action": crop_action,
+                            "disease": name,
+                            "disease_action": disease_action,
+                        }
+                        st.session_state.feedback_stage = "done"
+                        st.rerun()
+
+        if st.button("❌ Other / Unknown", key="fb_disease_unknown", use_container_width=True):
+            fb.save(
+                image,
+                correct_crop=correct_crop,
+                predicted_crop=predicted_crop,
+                correct_disease=None,
+                predicted_disease=result.disease_name,
+                disease_unknown=True,
+            )
+            st.session_state.fb_summary = {
+                "crop": correct_crop,
+                "crop_action": crop_action,
+                "disease": "Unknown",
+                "disease_action": "marked unknown — not used for training",
+            }
+            st.session_state.fb_last_retrain = "skipped"
+            st.session_state.feedback_stage = "done"
+            st.rerun()
+        return
+
+    # ---- Done: summary -------------------------------------------------- #
+    if stage == "done":
+        if st.session_state.get("fb_last_retrain") == "in_progress":
+            st.warning(
+                "⏳ A model update is already in progress. Your correction has been "
+                "saved and will be included in the next update."
+            )
+            return
+        summary = st.session_state.get("fb_summary") or {}
+        updating = (
+            "\n\nModel is updating in the background..."
+            if st.session_state.get("fb_last_retrain") == "started"
+            else ""
+        )
+        st.success(
+            "✅ Feedback recorded:\n\n"
+            f"- **Crop**: {summary.get('crop', '—')} ({summary.get('crop_action', '')})\n"
+            f"- **Disease**: {summary.get('disease', '—')} ({summary.get('disease_action', '')})"
+            f"{updating}"
+        )
+
+
 def _run_analysis_and_stream(st, result, user_note, session, handlers, append_message):
     """Shared flow after inference: two-phase LLM → stream summary to chat."""
     from chatbot.prompts import INCONCLUSIVE_WARNING
@@ -219,6 +408,7 @@ def streamlit_main() -> None:
         run_inference,
     )
     from crop_detection.disease_logic import select_crop
+    from crop_detection.feedback import FeedbackManager
     from tracking.tracker_ui import render_tracking_panel
     from tracking import persistence
 
@@ -234,6 +424,27 @@ def streamlit_main() -> None:
     @st.cache_resource(show_spinner="Loading models...")
     def get_model_manager() -> ModelManager:
         return ModelManager.from_project_root(PROJECT_ROOT)
+
+    @st.cache_resource(show_spinner=False)
+    def get_feedback_manager() -> FeedbackManager:
+        return FeedbackManager(PROJECT_ROOT)
+
+    # Arm feedback session keys before first use.
+    for _key, _default in (
+        ("feedback_stage", "crop"),
+        ("correct_crop_choice", None),
+        ("final_image", None),
+        ("fb_summary", None),
+        ("fb_last_retrain", None),
+    ):
+        st.session_state.setdefault(_key, _default)
+
+    # A completed background fine-tune flags a reload; clear the model cache so the
+    # next interaction loads the freshly hot-swapped weights (live learning).
+    if get_feedback_manager().consume_cache_clear_pending():
+        st.cache_resource.clear()
+        st.toast("Model updated from your feedback — reloaded with new weights.")
+        st.rerun()
 
     # ------------------------------------------------------------------ #
     # Sidebar — session management                                         #
@@ -304,6 +515,7 @@ def streamlit_main() -> None:
         _render_detection_section(
             st, session.analysis_result, key_suffix="persistent", expanded=True
         )
+        _render_feedback_section(st, session, get_model_manager, get_feedback_manager)
 
     # Medicine tracker expander (visible in ACTIVE_TREATMENT outside the dedicated page)
     mode: str = st.session_state.chat_mode
@@ -417,6 +629,7 @@ def streamlit_main() -> None:
                                 st.error("Analysis failed. Check the terminal for details.")
                                 st.stop()
 
+                        _reset_feedback_state(st, image)
                         _run_analysis_and_stream(st, result, "", session, handlers, append_message)
 
         if st.button("Back", key="upload_back"):
@@ -522,7 +735,9 @@ def streamlit_main() -> None:
                         st.error("Analysis failed. Check the terminal for details.")
                         st.stop()
 
+                captured_for_feedback = st.session_state.captured_frame
                 st.session_state.captured_frame = None
+                _reset_feedback_state(st, captured_for_feedback)
                 _run_analysis_and_stream(st, result, user_note, session, handlers, append_message)
 
         if st.button("Back", key="capture_back"):

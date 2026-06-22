@@ -7,3 +7,13 @@ outputs/*
 !outputs/.gitkeep
 *.zip
 tracking.db
+
+# Local secrets (.env.example is the committed template)
+.env
+
+# Live-learning runtime: cloned upstream repo, training workspaces, accumulated feedback
+yolov5/
+feedback/_runs/
+feedback/images/
+feedback/labels/
+feedback/disease_labels/
