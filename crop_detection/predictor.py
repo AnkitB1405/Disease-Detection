@@ -19,7 +19,7 @@ from crop_detection.disease_logic import (
 )
 from crop_detection.solutions import get_recommendation
 
-CROP_INFERENCE_THRESHOLD = 0.25
+CROP_INFERENCE_THRESHOLD = 0.4
 DISEASE_INFERENCE_THRESHOLD = 0.10
 INFERENCE_IMAGE_SIZE = 640
 

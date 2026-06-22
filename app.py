@@ -272,14 +272,19 @@ def _render_feedback_section(st, session, get_model_manager, get_feedback_manage
 
         crop_action = "you confirmed" if correct_crop == predicted_crop else "you corrected"
 
+        # Pretty labels for display only; the raw model name still drives the
+        # class index sent to training, so labels stay tied to model.names.
+        from crop_detection.disease_logic import display_disease_name
+
         # One button per real model class, laid out three per row.
         for row_start in range(0, len(names), 3):
             row_names = names[row_start:row_start + 3]
             cols = st.columns(len(row_names))
             for col, name in zip(cols, row_names):
                 idx = names.index(name)
+                label = display_disease_name(name)
                 with col:
-                    if st.button(name, key=f"fb_disease_{idx}", use_container_width=True):
+                    if st.button(label, key=f"fb_disease_{idx}", use_container_width=True):
                         fb.save(
                             image,
                             correct_crop=correct_crop,
@@ -294,13 +299,13 @@ def _render_feedback_section(st, session, get_model_manager, get_feedback_manage
                         )
                         disease_action = (
                             "you confirmed"
-                            if name == result.disease_name
+                            if label == result.disease_name
                             else "you corrected"
                         )
                         st.session_state.fb_summary = {
                             "crop": correct_crop,
                             "crop_action": crop_action,
-                            "disease": name,
+                            "disease": label,
                             "disease_action": disease_action,
                         }
                         st.session_state.feedback_stage = "done"
