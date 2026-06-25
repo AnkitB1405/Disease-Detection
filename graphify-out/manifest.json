@@ -1,0 +1,1972 @@
+{
+  ".claude/settings.local.json": {
+    "mtime": 1781785327.2034812,
+    "ast_hash": "9181b1336f41812dd7c43b5b8cd15a9e",
+    "semantic_hash": ""
+  },
+  "app.py": {
+    "mtime": 1782126060.339813,
+    "ast_hash": "b4d0d1664d250e1eca17f4bd36c3b8bf",
+    "semantic_hash": ""
+  },
+  "chatbot/__init__.py": {
+    "mtime": 1781693543.3485708,
+    "ast_hash": "e6d3619b71b6614380b353f2c56c33c3",
+    "semantic_hash": ""
+  },
+  "chatbot/clarification.py": {
+    "mtime": 1781781722.198111,
+    "ast_hash": "4f9c937b37b11c9fe421c62132880ecd",
+    "semantic_hash": ""
+  },
+  "chatbot/groq_client.py": {
+    "mtime": 1781784799.9679484,
+    "ast_hash": "508135831d2032ec248ec081cc58c3cb",
+    "semantic_hash": ""
+  },
+  "chatbot/handlers.py": {
+    "mtime": 1781785319.515337,
+    "ast_hash": "23378327913ab9eb1e07b6d7ee0f86c2",
+    "semantic_hash": ""
+  },
+  "chatbot/prompts.py": {
+    "mtime": 1781783511.9378324,
+    "ast_hash": "cd4047bcf49d86698422de4fc4b61a22",
+    "semantic_hash": ""
+  },
+  "chatbot/state.py": {
+    "mtime": 1781783602.1270442,
+    "ast_hash": "c29a4ef5cf0c9942360f4180e89d1cd6",
+    "semantic_hash": ""
+  },
+  "chatbot/summarizer.py": {
+    "mtime": 1781785372.5612888,
+    "ast_hash": "81e5a44d67a66fa31b7a2a2f93ad0279",
+    "semantic_hash": ""
+  },
+  "crop_detection/__init__.py": {
+    "mtime": 1781520395.4935892,
+    "ast_hash": "b1c45b10b7ebde4ea9a820d1ee8bbad4",
+    "semantic_hash": ""
+  },
+  "crop_detection/disease_logic.py": {
+    "mtime": 1781520395.4963672,
+    "ast_hash": "306ad0ae3d5b82e17c2b9adbf8d780f7",
+    "semantic_hash": ""
+  },
+  "crop_detection/feedback.py": {
+    "mtime": 1782123832.1619263,
+    "ast_hash": "dd952b792ad5b19769bb68c5f8497b21",
+    "semantic_hash": ""
+  },
+  "crop_detection/predictor.py": {
+    "mtime": 1782126762.1467373,
+    "ast_hash": "800c969cefa3c468a23de04765345b56",
+    "semantic_hash": ""
+  },
+  "crop_detection/solutions.py": {
+    "mtime": 1781520395.4964797,
+    "ast_hash": "368ace45f4129446c422500a08f03747",
+    "semantic_hash": ""
+  },
+  "data/medications.json": {
+    "mtime": 1781763687.0199008,
+    "ast_hash": "c97654f79c32f70a1388cbdaf3e637aa",
+    "semantic_hash": ""
+  },
+  "tests/test_clarification.py": {
+    "mtime": 1781693960.6736052,
+    "ast_hash": "13ba88319e6cdb3a4734885e3cf8f6d3",
+    "semantic_hash": ""
+  },
+  "tests/test_disease_logic.py": {
+    "mtime": 1781501649.7198822,
+    "ast_hash": "17bf663db7fd6247a48fdf42887598e4",
+    "semantic_hash": ""
+  },
+  "tests/test_groq_client.py": {
+    "mtime": 1781693948.312932,
+    "ast_hash": "3d7d4514f8c1885483d049a716ef805d",
+    "semantic_hash": ""
+  },
+  "tests/test_persistence.py": {
+    "mtime": 1781693994.699816,
+    "ast_hash": "8ec1dae251050cd3964ecdbab6537b41",
+    "semantic_hash": ""
+  },
+  "tests/test_predictor.py": {
+    "mtime": 1781693929.4705372,
+    "ast_hash": "45650d719a2a354de04f0b571e2673ac",
+    "semantic_hash": ""
+  },
+  "tests/test_summarizer.py": {
+    "mtime": 1781693975.4839828,
+    "ast_hash": "24e747e9dcb5aa119edbb73098ed78bb",
+    "semantic_hash": ""
+  },
+  "tracking/__init__.py": {
+    "mtime": 1781693459.0294356,
+    "ast_hash": "f1ea419ddfaba043f65cfccfb3c8f529",
+    "semantic_hash": ""
+  },
+  "tracking/models.py": {
+    "mtime": 1781693454.7333038,
+    "ast_hash": "0c9353c196db1863e80fb5df09689e88",
+    "semantic_hash": ""
+  },
+  "tracking/persistence.py": {
+    "mtime": 1781693490.4800913,
+    "ast_hash": "40b1fd225c8acb5ff12d5f1ddaa07d32",
+    "semantic_hash": ""
+  },
+  "tracking/tracker_ui.py": {
+    "mtime": 1781783647.0749645,
+    "ast_hash": "f741737d04d035d262d8799036f68b08",
+    "semantic_hash": ""
+  },
+  "PROJECT_CODEBASE_GUIDE.md": {
+    "mtime": 1782107819.7881303,
+    "ast_hash": "cb4204a2ced1de9917728ade7f6ecf4a",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1781763687.0195699,
+    "ast_hash": "23debf3f9db3d4152b1da6f3f84a690f",
+    "semantic_hash": ""
+  },
+  "corn_disease_v4/hyp.yaml": {
+    "mtime": 1781520395.306358,
+    "ast_hash": "0b99b67c046abfdcc69005b3d8db9e83",
+    "semantic_hash": ""
+  },
+  "corn_disease_v4/opt.yaml": {
+    "mtime": 1781520395.307294,
+    "ast_hash": "0b06b951347bb05be14394929d1f74b7",
+    "semantic_hash": ""
+  },
+  "docs/ANKIT_TASKS.md": {
+    "mtime": 1781694048.7591689,
+    "ast_hash": "bd1011191e1fefa21a2b618b74fbb4b7",
+    "semantic_hash": ""
+  },
+  "docs/ISHAAN_TASKS.md": {
+    "mtime": 1781694086.8068688,
+    "ast_hash": "5db53a52d4ea3b8722d5c0bfd58866b8",
+    "semantic_hash": ""
+  },
+  "docs/MULTI_USER_UPGRADE.md": {
+    "mtime": 1781694194.692122,
+    "ast_hash": "f55532e7a94c26157385b40df352b546",
+    "semantic_hash": ""
+  },
+  "docs/SUHAAN_TASKS.md": {
+    "mtime": 1781694140.11382,
+    "ast_hash": "c7f14e2eb7cdffcb89cf911255cd3098",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/beautiful-shot-cornfield-with-blue-sky.txt": {
+    "mtime": 1781520395.4965217,
+    "ast_hash": "6047aa0ae1b9bb5f942579ccf9577c01",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/front-view-corn-field-which-plants-have-reached-their-maximum-height.txt": {
+    "mtime": 1781520395.4965658,
+    "ast_hash": "692d8e60469ab8c201cec5d114b74512",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-10125561-612x612.txt": {
+    "mtime": 1781520395.496581,
+    "ast_hash": "7d82dd46b34df95091bd2980cd4b8ab2",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1042805472-612x612.txt": {
+    "mtime": 1781520395.496581,
+    "ast_hash": "afb80a2536a3f454d88791d82048402b",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-115870654-612x612.txt": {
+    "mtime": 1781520395.496581,
+    "ast_hash": "fe28ff4510a98a6006e497db995bee92",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1168630488-612x612.txt": {
+    "mtime": 1781520395.496581,
+    "ast_hash": "5b63452f4a700ddc9a1e5aae3b91cbce",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1176614843-612x612.txt": {
+    "mtime": 1781520395.496581,
+    "ast_hash": "6ecd61f6c3b49267c4466d8ebde090a8",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1176616046-612x612.txt": {
+    "mtime": 1781520395.496581,
+    "ast_hash": "08746203014bb16176a8738576c80490",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1202811584-612x612.txt": {
+    "mtime": 1781520395.496581,
+    "ast_hash": "1063a962c9d45ddfc4ba1d4f511c199d",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1203183001-612x612.txt": {
+    "mtime": 1781520395.496581,
+    "ast_hash": "a191fa72e003fff29e8fb3edf1f7ad00",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1244197903-612x612.txt": {
+    "mtime": 1781520395.496581,
+    "ast_hash": "d0ac04d20d57e73e3e8805f9da082c38",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1266150706-612x612.txt": {
+    "mtime": 1781520395.496581,
+    "ast_hash": "eff7133041dc8aa95eee53348cfd0280",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1270712466-612x612.txt": {
+    "mtime": 1781520395.496581,
+    "ast_hash": "ac890b7e8498aac572029f067e916801",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1280623542-612x612.txt": {
+    "mtime": 1781520395.496581,
+    "ast_hash": "cfc53ab0d93046492e0becd2e308a8a9",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1288283834-612x612.txt": {
+    "mtime": 1781520395.496581,
+    "ast_hash": "85828b5041a058704fb228910f658155",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1288698256-612x612.txt": {
+    "mtime": 1781520395.4967642,
+    "ast_hash": "a08be55d32ee134379c6b7f2a061dba4",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1327798575-612x612.txt": {
+    "mtime": 1781520395.4967806,
+    "ast_hash": "4d74d1ca2c93833492cddd6e32a6b1df",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1330610602-612x612.txt": {
+    "mtime": 1781520395.4967806,
+    "ast_hash": "f4fe8986feca1cccc7b7e9873af97415",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1334107442-612x612.txt": {
+    "mtime": 1781520395.4968112,
+    "ast_hash": "523913bf10031fc42fe2b78564d1ffd8",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1336865533-612x612.txt": {
+    "mtime": 1781520395.4968112,
+    "ast_hash": "60df74a80a5b83684c7c2b96bc112ab9",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1339067904-612x612.txt": {
+    "mtime": 1781520395.4968112,
+    "ast_hash": "51c8d936f0caf60cb51a409b23ed8936",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1341907749-612x612.txt": {
+    "mtime": 1781520395.4968112,
+    "ast_hash": "73f2633219e3b4e74f36267a4076b97a",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-136599283-612x612.txt": {
+    "mtime": 1781520395.4968112,
+    "ast_hash": "591b8de19d0db0bada76ef790646fe03",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1371288806-612x612.txt": {
+    "mtime": 1781520395.4968112,
+    "ast_hash": "f53acfe497edc4ce11e145cbdc306bda",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1390924530-612x612.txt": {
+    "mtime": 1781520395.4968112,
+    "ast_hash": "fdbe8af194d82ba8a5472b741a107164",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1395764884-612x612.txt": {
+    "mtime": 1781520395.4968112,
+    "ast_hash": "ffe9f94a05be742a381c0f2b20a7d64f",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1407824651-612x612.txt": {
+    "mtime": 1781520395.4968112,
+    "ast_hash": "aa36c8f8df3bb557e6ece049afc49f66",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1408874684-612x612.txt": {
+    "mtime": 1781520395.4968112,
+    "ast_hash": "7ac258e20b3f9e4c439432939f4a0316",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1412074568-612x612.txt": {
+    "mtime": 1781520395.4968112,
+    "ast_hash": "69044b111bb8cf6746a623341a4f9984",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1413869764-612x612.txt": {
+    "mtime": 1781520395.4968112,
+    "ast_hash": "89bae6c0310911d52ebcf07e46ad011d",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1425802870-612x612.txt": {
+    "mtime": 1781520395.4968112,
+    "ast_hash": "202406aaa28d78f4ee10711abced468c",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1449527379-612x612.txt": {
+    "mtime": 1781520395.4968112,
+    "ast_hash": "787e94df0426e1b3047380d08fe39743",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1449527401-612x612.txt": {
+    "mtime": 1781520395.4968112,
+    "ast_hash": "7971a1d004aeb42fdd5b8fb65bea8985",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1454021161-612x612.txt": {
+    "mtime": 1781520395.4968112,
+    "ast_hash": "e160c23808d64181bf2e00bb3b0c4b57",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1461283985-612x612.txt": {
+    "mtime": 1781520395.4968112,
+    "ast_hash": "d7898e8d5fd85601411c7a9863189bdf",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-155098957-612x612.txt": {
+    "mtime": 1781520395.4968112,
+    "ast_hash": "c8c2ffab029a547288d3f2def7722929",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-155150045-612x612.txt": {
+    "mtime": 1781520395.4968112,
+    "ast_hash": "7d8d057c6363dd8cbc18d853622821fb",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-155377094-612x612.txt": {
+    "mtime": 1781520395.4968112,
+    "ast_hash": "4209dc05fcf28bc3f5d89c1c2bdc9b37",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1566504843-612x612.txt": {
+    "mtime": 1781520395.4968112,
+    "ast_hash": "f344f7a918c6d9b767c2b84fb1726494",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1586856168-612x612.txt": {
+    "mtime": 1781520395.4968112,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1594072344-612x612.txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "efe92c265fcdd74eae0cb675eaf8a0ca",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1630168914-612x612.txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "22d294a2b1c0955cce97286e912457ce",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1636192463-612x612.txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "98a159313c3cb43574ede8bec3d69c13",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-168351414-612x612.txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "7a2c64675b79216d4fba0af189dfaa52",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-168358288-612x612.txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "2ec357574e42c28df0b33492cf1ffbf1",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1687771059-612x612.txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "922f487e8ec18d9e0d4453201fc6f7c2",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-170618811-612x612.txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "c797862b3e66eaec0fb7f28f1ecc1073",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-171275399-612x612.txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "f71a067416a943705f7342fa1c16247d",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1724959370-612x612.txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "cf69d70681ed58f6c46134e61c02a9ca",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-172652398-612x612.txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "7e3e2ba63448f3b15e3f8550cde8c54b",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-175598066-612x612.txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "73d98f18eefabc02264dd8450e50e4a9",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1777981114-612x612.txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "301a578042a299d63a5d0a3fe22edfac",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1797165303-612x612.txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "d473e257fa501f154a127e3374ae2e7e",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1802242580-612x612.txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "3030592d0f364c7f7cd0180ca40df644",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-182930174-612x612.txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "7778d0da84c60d530d8b0e7f77d222a5",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-184399450-612x612.txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "ce33b125efef4fc9673cd189d6d2981f",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1980598187-612x612.txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "753804ccc4411b9a801769f2b23c0d5a",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-1980598188-612x612.txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "cf32178f4251b15b908d10d07c9de81e",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-2053698667-612x612.txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "f10c6099609a7a4a2f50ba666408121f",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-2079265046-612x612.txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "7b6f8f64443d4039175adfb4be889614",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-2150320618-612x612.txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "0ed30382aba05bad5a9ba2dc9e9be42f",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-2150509246-612x612.txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "2f5926572b1e5d989c1e0558ecd56c05",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-2158565398-612x612.txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "17e8ea91457e45c073f46a5b7105b17f",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-2160899883-612x612.txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "49a204939b85c4865688f7aa1caadebf",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-2161562567-612x612.txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "38a27d3b6d19981d52aa1b8e95b446c6",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-2162616201-612x612.txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "529edff4ef2b4606f6e640f3ef11dfe8",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-2162616202-612x612.txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "afe226579352b9874168d54991bc3ca7",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-2162824330-612x612 (1).txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "c37d8ce6643ad10cd7f96ce610308edc",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-2162824330-612x612.txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "608a65bf4a7c20138804b7695d904463",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-2164009224-612x612.txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "05e099120d27abc0c2a8508ef923d40b",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-2168352900-612x612.txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "c5625aee8909868f38bec80350f7bcbb",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-2168393598-612x612.txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "6166189db3b8600a9a76c7a21fc073a7",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-2168817085-612x612.txt": {
+    "mtime": 1781520395.4971573,
+    "ast_hash": "a964932cdb8b4f645cef008770f9142a",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-2176084526-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "0175f0c3993295da59aeb4b5e28d14b8",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-2176084556-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "bc588fb12f1745cc34dc6baeab8687b5",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-2186909858-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "c95fbdf026963c0a09ba1f2d0a7ac00c",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-2197519736-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "a6dcfec32427f99cdc2069a2df8f49cb",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-2211322220-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "8eef548cf32b97738cf88e7bed174e0c",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-2219634846-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "6c3967593f8af6e11b02be92aace7847",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-2222250101-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "dd0ec4368c666678a32ea92bcc5d0ec7",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-2254244221-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "bd22fcf17ebbabf6e81081d164b197dd",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-2257208406-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "34bc48326c1f3bb740c0301cba6ce674",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-520378382-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "a2c3eeecf1e5c0751706d7400ade068e",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-520518982-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "ddb52fc0e7527cad0eedc0accd7972a2",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-527873380-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "d4e4b44a210af6578648eb0730e1293e",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-583739186-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "934466264d3004d4640812b4943c9602",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-610732982-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "6fffdd3f47f2ee1aeaa0c5e4f6135690",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-633638961-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "1ad98230b37a12531637ec4351d369e3",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-854409370-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "e77e0298cc4b43525d6b4cfb58b36ab6",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-92325962-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "0a23a173fbebf0f7bc4515a2ae5af3f5",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-92667121-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "e9ac3ff50f0c51df304b600fd0245aa2",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-92804738-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "ef0ab5ee8a6047e495e451eda55da8bb",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-96157985-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "1c850a9ff049bf6dcee4b4732bc19cce",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-976414940-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "d7575670d4c03fb34de1b4d1be2b5c7d",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-981717610-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "afc450b42ee388969bd26036c4a27bb2",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-981859780-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "7bc8f0cdd49a88691884b4d6c306bee8",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-981878116-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "fcc540f2b57c652aff345535fe486af4",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-991000546-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "7644e199e93d5180b6070c3d8c879771",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-997812720-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "e750aa4d3a95bbabd4ede7355bf8b371",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-997834542-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "176e1816c680b9e926577f3718c75d65",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-997834552-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "61ab2547d79acfe42e0b799d7e7f218e",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-998498110-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "93dc684119de50da6db9ace36286c2ee",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-998541334-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "2c89e548ffbcc2e94f89d530e65bc631",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-999128346-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "fcb2525edba7d29f4632c9ec0e441c43",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-999128348-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "152f5e0719efcc61ac78959d08d17658",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-999128362-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "9a7ce04a61882f3baaae39059c0a0adb",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-999128376-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "da1817629c16504bf7b03c85cfcb83f7",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-999390474-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "4f32181543b27fa49c2bf1304037ed80",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-999570420-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "c35626425650e535235daba928d6b953",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/gettyimages-phaagb000094-612x612.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "7e0408e7f3b4a12fb9b51abe2392e5f4",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/high-corn-crops-row-43560244.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "5cf8f79ac9a2acec0a77406de2b96ed9",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1003610040-1024x1024.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "985a3c6f3cd4d7ddcf0f9b653d78fb63",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1007195564-1024x1024.txt": {
+    "mtime": 1781520395.4976969,
+    "ast_hash": "0f39a9f66067d7161c4d5cedfcc776b0",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1014802986-2048x2048.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "fb88e2146ef8a800be5b9a3f9dcaf9cc",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1019464184-2048x2048.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "81d318de51123720e4f704da17ab55f0",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1033157436-1024x1024.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "2be9eaabcf1c7b5b5ac6845275e72757",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1045587072-612x612.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "e5a7d458b092da2c86cf8de128b2f55b",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1053004026-1024x1024.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "f6023b72e4ce49bdbb48a5af97ac50d3",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1065637576-1024x1024.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "d3810c97cfb82a5f208990cf44d96a7f",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1068291036-1024x1024.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "ffee083b8cbbdc0647a030230d227978",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1090143076-1024x1024.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "ef4c56705ed0b54535c123bcd9c7f9ee",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1090143294-1024x1024.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "a3b9d7ca7a44b548c5b51c2f9ed67082",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1091082982-1024x1024.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "0fd180704dc558d0c86b12c5f2fb24a3",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1129162527-1024x1024.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "af56e86c2997785b994d1d82b7c29280",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1130377166-1024x1024.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "7d3cba12443c3eb59d92df91879dfea6",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1133692494-2048x2048.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "544b8ad21a38bc4731e164f261b0e000",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1141386757-2048x2048.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "7fa5f483ecba74d5fd9d9224944c9064",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1150416939-1024x1024.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "b0c7b1bb4e131dc9bac2c33520af4ebd",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1151317931-1024x1024.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "5caf87e2725294b7ef8ffb836f70454f",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1151319123-2048x2048.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "c7c3e715b77b7a006aa3d7a50da73e04",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1151320158-2048x2048.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "03eee0befbbc148c39078d600a68f504",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1166698041-1024x1024.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "50638fc9bea1b93491af3f8e711d61bd",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1170759667-1024x1024.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "4f51c111186a2446d618e05397a82b36",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1176092028-1024x1024.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "1b0cf0e00e288208cad62ab8371c9871",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1181820472-612x612.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "c192a18f1930d8a5bb23fef96f0f15b8",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1186934596-612x612.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "06a3cabe1daf050ec505a0e4ca62a861",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-119463058-2048x2048.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "23d51bedd2175e3d6dcd18d8f170feb4",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-119506034-1024x1024.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "2c558001ffbb116f8de87133a1625f17",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1223415550-1024x1024.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "84182ccd3d6f176217f2d59e9d260ff9",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1266885286-612x612.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "fdb854e9cfb7b0a02b203091d4ac4e03",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1268570080-1024x1024.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "5a3dd05af44e504a6ef959e776062a89",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1277276734-1024x1024.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "55c895d7e04d880545e89d0704e5ff1d",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1280280360-1024x1024.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "0536e7cd946bc645abeae1efd16a50ff",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1286665487-1024x1024.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "adb68491ef4d82f6db4b88d3d5950b3d",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1290560106-1024x1024.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "2e294b662521e36f4a411b020bf55fa1",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1292889275-2048x2048.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "0dfb5ab66bd08ef68b6084ee5d1d0270",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1296890643-1024x1024.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "48af9523d2d4e502f3ec7d25803cab68",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1308597634-2048x2048.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "26c0a19b233738ddc5c0082b2c0e08dc",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1308601290-1024x1024.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "4ba4958866df2175818b82c3fef5f4e1",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1308606393-1024x1024.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "4f71522d393ee4fbfb6045c78c27918d",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1316105547-612x612.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "7a7f65ad9df2d2efbbebcbdee11e4039",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1320543673-612x612.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "fc8ba5001d64f127b37454edd4265af0",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1333088891-2048x2048.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "bc5a1d1c54eebc50c483bb2c1d13d758",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1340538313-1024x1024.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "3c1d11a2e6710c0f8c39a1faf980645a",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1340538321-1024x1024.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "e6ac3db465247cf411029410cf70d315",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1340756520-2048x2048.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "9dd31b0b1cf7fe3923f796f09d624a0c",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1345463807-1024x1024.txt": {
+    "mtime": 1781520395.4985,
+    "ast_hash": "fb9cc2c104545b2a10c6fa164c30d555",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1390564233-612x612.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "17fb1cf44b03ad2272031a347b8b8216",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1407856961-2048x2048.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "732b3561d61d348204ee99040758e5b9",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1407941343-612x612.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "73370b5a7bdea18be67922c218f77ca4",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1409329793-2048x2048.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "6e43336f6e3c76e32ca1d11b25f02d93",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1409838563-1024x1024.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "d97140876c4d79a38c787cf6cdff90a3",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1413301481-1024x1024.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "bf4941ca4eceff6f2e9f4dbdb204e22f",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1414269131-612x612.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "aadff7036ec46400be67b9df3147ea8f",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1429382391-1024x1024.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "f79038384c824a5c69122f2a68487f89",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1454890319-1024x1024.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "e20b05bba0b5d6801a375514522d8d20",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1489731858-612x612.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "0e24cc418334609163c5433524e2546b",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1493671803-612x612.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "10bfbcc20b464e342bda08b11323521d",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-151532478-1024x1024.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "80e846fed9b64e2b7c0896b9846a21ff",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-155490563-1024x1024.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "f37c5ba86b1d16e0e9ca4f48c40acfa3",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-155585480-1024x1024.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "4d867b9b8fe06aa52fd68019d98dfeed",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-157033085-1024x1024.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "da81196d973779080d039199fd10dcc7",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-157258508-1024x1024.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "f33f8c1bced51b746d4176a437602cfe",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-168351414-1024x1024.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "ace1eb9413eb4a047a7bc6fc6604a77e",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-168351414-612x612_converted.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "fbf384ccbdc52d093496f980759fd5da",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1709695027-1024x1024.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "07f3b2d6af68fc4a8d6f4900f6659170",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-172977783-1024x1024.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "47bb5bf71969340b9d0094b03862c4ec",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1750331297-2048x2048.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "c0fa0ddb3dc27f6039c1b0d0d0ef2f22",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1798817639-1024x1024.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "b35128e23cccdf30d89e66fbd5f18c83",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-184605252-1024x1024.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "cdeec807506d8da6ae810420f2aceb18",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-184700502-1024x1024.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "f9f6449516944b050a6e8f2887547949",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-1967723421-1024x1024.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "bce6505f874b32c017e022adeb3ae0bc",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-2096345519-1024x1024.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "c6965297f0abd0db24bfb3003cda6e37",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-2154240631-612x612.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "b995d289bd5100f028431328b36f31db",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-2165257608-1024x1024.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "02b2f3c523e3ccc951d4c32c1d21362e",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-2176723928-612x612.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "498a88254e51a90af4310559b0b75862",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-2204524559-612x612.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "04c28325c71fdafadf45111730d08195",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-2228038722-612x612.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "3982d0a6fcbb5c0d089d9a7e0b87f747",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-2268790202-612x612.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "c417dbd28e763310cf08e134d7593cb2",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-2277602173-1024x1024.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "7e9b14cf7938044273eda7c78016e1e4",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-476539024-1024x1024.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "7290a10d7862c72d2238df06a21839f0",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-480774520-1024x1024.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "b5a7f5ff79e319d0ca65603de5ccc05f",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-483413298-1024x1024.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "cdd61ac0a8f6979579eb7d074f493c87",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-483609222-2048x2048.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "099ede573961603e39d432fde717af77",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-512326595-1024x1024.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "600b55c35f27461fcff031f38bbf015b",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-513273705-2048x2048.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "485a8f2d678d62c56fe88ddc974d7499",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-528106241-1024x1024.txt": {
+    "mtime": 1781520395.499294,
+    "ast_hash": "b8507b3a6110b41a069a1d2696313973",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-541586482-1024x1024.txt": {
+    "mtime": 1781520395.5001287,
+    "ast_hash": "36e64b294bb9c98fc10e8fb7d42a1682",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-611881950-2048x2048.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "b24053064e3a064ffa76c1d1b066ba9c",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-869946470-1024x1024.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "2ee6cd3e729fbe16cb8f656d3ed45e86",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-90628330-1024x1024.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "2a7100fc4d4c6ce165e00aa4a7536b78",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-91779190-1024x1024.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "67f91eee36a849a2d392bd315a6e28a5",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-92667121-1024x1024.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "ad8a5eb7aa4c5ac9475204d493d1f2a8",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/istockphoto-96642661-1024x1024.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "6b67754c83086022e39e5b31c1ce6893",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/maize-corn-crop-beautiful-portrait-large-grain-plant-leafy-stalk-plant-produces-separate-pollen-ears-96749431.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "ff40b674b82895b4478bbc2fe5cef055",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1444853431252-85562925947d_converted.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "1f7c75baf23b29ac1f6fd73ddbdaa850",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1470101209582-a8efb15490b2_converted.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "5613ebf83ffbc2478d7ecd49bb8fe196",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1498811077893-814242077ef6 (1).txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "d5e8a3cbf7ac6d2b47da01f799fa9b44",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1500023721469-5f8532dce827_converted.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "22c879a98c5803f22102b81ed8e89666",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1505764706515-aa95265c5abc_converted.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "2a53166af75ed590ed6aa4b4cd5046d2",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1507637379087-515718ca7c58_converted.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "9853c41b9c12b0f6698be0257db79d10",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1527819820027-5cc8e6efc21a_converted.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "917d691a56d4c8899fe977940f8fdcc4",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1531339137874-f8999782d3bd_converted.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "acb5415974fca9b33be46357652e5eea",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1555763569-c153b38a3561_converted.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "f5e619869be4a2945ce76c4940a87167",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1558241665-89718b74c89c.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "e0b93b2ca5eefc4ee1334c341063e26e",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1558340687-26bb82b1a4ea_converted.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "d275a7dd43865ccffab7b4be61ba5379",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1567547921486-f280c2f53b5d_converted.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "5f0ed9895bc586800950cbf4d6162440",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1585545820754-8c07c0d82251.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "613b6d32054f89be03468d94336c82c2",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1589520831025-5b00d2d24647_converted.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "b18623ff0f8be458578c386de57f9a05",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1589521568139-01b65149323d_converted.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "12c92b5a672c7cb18f44258c3aa8f552",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1590578006848-660c774fa991_converted.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "a4a5d02358ab863b1966c33ad34a74ee",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1593441210222-6543b1c1fffb_converted.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "3b814ea83630eb85e493abec26cb78e1",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1594491112169-b07666ee6400_converted.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "eb7d3a3692152fd7c50ce9a265421b6f",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1595274593201-ea4bded83d46_converted.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "cdb0bc0a561eb8ded8d09b01001647c5",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1596718547216-18e7378156fb_converted.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "3e39a3fd197b6c31c3f6006fd1d62d04",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1599833159496-24a6e5ffbc42_converted.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "a7a2bd144acac38e877ab3f510c66fd9",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1600160797026-a79931a94cc9_converted.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "128bb7c356bfddd8105efb4a884ed999",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1600500010695-d5818ab86307_converted.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "3a9425799903275c70a434243ee1dd46",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1601593768799-7433c2447c29_converted.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "57dd7561230a15300206946402f6ea70",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1615129825073-c47c67bdec5b_converted.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "6f0ba37aec5980b9dba1096cca16e014",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1622840951255-d08db152f4ce_converted.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "07256cfb795fd8cfaeccd49d621afb51",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1625623176472-f50cd9a219d7_converted.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "2882c4042f34d05ec161dc11ef6783ac",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1628794649346-9dedd7bfc741_converted.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "535e3cef8ec0c2082c3333c7c8779fdd",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1629038705245-bb44bdcbe36a_converted.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "7b49728f8e1ea41cba9e624cd72812fd",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1629551984585-2c57406acc6f_converted.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "9e04e1171c9ceb955c510e33d21d9450",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1629734014568-3e420eab40a2_converted.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "1f65b24cc2fe0de23693f2b5a87f1659",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1633338001234-63ede6a2c0e9.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "70dc339bd42e061bcab4f1eec99388cc",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1635343249751-38cbd2d7538f_converted.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "6b6e280a830c3509a31b5608fe013a02",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1638662676110-3cf1d4d7df72_converted.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "d937eddeed025987a8ef8bc301bd55b3",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1642384642864-bfc87fdd6ace.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "2aa31aed88f4f4b3f2617f2ead1f5651",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1645205407601-ee1c3a72c24a_converted.txt": {
+    "mtime": 1781520395.5001872,
+    "ast_hash": "b92bfa2e08ddc283cccf0c6a45f3a866",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1649665612550-df97d3cc7de1_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "3b35b9846258587d3561f782ba05a1ea",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1649780935713-c05ad1804781_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "655fb0b59da2b8e79e82827645f68594",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1654597812494-72fc61fcb894_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "d40bc499dc3e55ec8cd3c3c64436d617",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1655891185482-a857b08a9cf7_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "538bebf3b4047026a2b5409f142d057a",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1655891186244-8cd3a9047a53_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "efbea0cf75ff714015be8d5848f8e86d",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1659710718982-f668746f4f13_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "3447c8d43f6edef8fedb09492f1fe57a",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1659939418161-bba400653b27_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "f20129af98655e02a47e34b39129eefe",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1661354132584-a2398cefa273_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "de418c03f31d0578ccbf8b8388f15c97",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1662533654018-d3fe2a3b7f4b_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "7299bbf2e3fc7d2699f6589b75038eee",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1663010041127-215616730a1b_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "1f2ae2951dc3881e09f9ce4a41a984fc",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1663216539728-eb7c6909373c_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "7fab6154a3e9a2a49db64c4c7e0dac6e",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1665572949254-62764fc2972f_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "e315d227622df16cf2472f9c59c3332d",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1667129086716-73780c3d4a5f_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "e4bc5b47ffda5ce77c51642151ee55f6",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1671565750868-477b17f95052_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "0aaec6ec04456096af022560a963cfe4",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1674994025991-178c93f4bb42_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "4d205b4a75506b01e7926d8acf9e8c4f",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1686468892482-babe71bc4bf3_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "8454c010dcfb3f3a311a5b3b19263004",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1687877954353-82169c3bdd50_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "f3a3f4d8aa395a6a0d9f760becacbfe8",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1687877955985-d29b957b2600_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "ae3160ec6f9de16a46b36414afea412d",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1689291960764-2a2bb3326ac1_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "8608218bacd9686e00fbeaa4f44b3e9e",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1689291960866-41e08a2ded54_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "5d53d4c8ac44dbe700ceeffa14032bad",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1690149694603-b7db5bc2f777_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "dded6453c8630f5288b43080ad13e032",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1690702916473-cd77905bfab6_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "1f98950a1516c26f9b1a71ec122e2d4e",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1691952924599-2ee848034b92_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "9b59b6fbcf1a16fd125ce2ec841102aa",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1692581890776-0e07eed639e6_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "dde26ba712b1a53b5d686d4865da04a7",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1692705048867-bbe378197178.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "0b1028bac8695ee0b788ac7c3bba9c8a",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1693672843048-82d7c1a20974_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "f402fbccc27b05fd77c0e75b2dc51aea",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1693672843335-5d9b7a6fc3d5_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "b764cd08820c2f969d4cad02caa521b1",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1694986088866-0ff814050210_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "48de1205ee9765196f70bb44659e11d0",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1696588803683-0989d4e9dbc9_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "6d0ffd263a78f8af443fd4660225c4f5",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1697539015177-af6c55516481_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "361df72c1d4cb9adb60237f3dd5e8426",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1697708966940-81de7a979b69_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "bf71a6a3aa0ebfc1ba3e2309fb3abb79",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1704613278892-0056895dd46a_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "76276fe05ad35cbd56452b5a2c504097",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1704641915163-7089a9fa381e_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "609a47f547e81ab5aa6bd8feda0b313a",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1704641915232-2b21a4948e21_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "fba89006febf21f8e80c4caf7cc16496",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1704641915394-9c136b9b9a1d_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "847ca26085abd72e79beb2749d97dd1b",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1704641915560-d265b9844b0a_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "f30201e663d1008af6cea68892cf5d0e",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1708148259809-2756a1806400_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "0c5dfaaaada6677e4b45c529332dc610",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1722452615021-ecb51cb8e831_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "0682a7bbdcec88dcba9bd416385663ba",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1723645013435-c3c8948faf59_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "2d7786c49e8d6a98817448762153c43a",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1725886783675-0d71c9c4efec_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "ff4345f0b3d589b3209f584cd4d56f99",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1725886783675-eb3c9b0cca82_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "57beb8a9185a13f3bf4da1e21cf0f21c",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1725886783680-4be59962044a_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "e9fcb84f035a968626d87e7ab351db42",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1729178273957-fcce226413b6_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "998179c9cb60f4de355de45373ac64b6",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1730057190389-36356ffc8e6a_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "83d6945ef6410feb1a9ba2a69f49b255",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1740088523792-6a05652a0b70_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "eed602bd07505f22b3e8524d4cfe15ca",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1744726007645-04745ac2b010_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "e1506e4d91e1da1d4a1a46e44168739d",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1750533725276-2feff1015bde_converted.txt": {
+    "mtime": 1781520395.5009904,
+    "ast_hash": "237326c7b3b8fa05c3e66d629c24f8a1",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1752774717396-bffa17253dde_converted.txt": {
+    "mtime": 1781520395.5018485,
+    "ast_hash": "fdf0890965309a0c19a3f576fcb24589",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1752780875156-9ccda91fc87c_converted.txt": {
+    "mtime": 1781520395.5018485,
+    "ast_hash": "33ad371aff2c6edcfd4dbf88ebc25577",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1753683672420-38a124ea42a1_converted.txt": {
+    "mtime": 1781520395.5018485,
+    "ast_hash": "cf4cc6950d962509d4159c1d09d658a3",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1753960211536-608caeb72beb_converted.txt": {
+    "mtime": 1781520395.5018485,
+    "ast_hash": "32f6de9257947cedb7de611c4c67ba76",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1759104050908-762e4ed24953_converted.txt": {
+    "mtime": 1781520395.5018485,
+    "ast_hash": "94c1826997a94821dd556630b84b2311",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1760954425358-4a6f208fbbfe_converted.txt": {
+    "mtime": 1781520395.5018485,
+    "ast_hash": "14aa2db8aec08626eb1271935d19b6ae",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1761237196863-edacbc0e3df4_converted.txt": {
+    "mtime": 1781520395.5018485,
+    "ast_hash": "ca15ee58ee0add9e5560d5a0ffc605c6",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1779085592493-cab228825884_converted.txt": {
+    "mtime": 1781520395.5018485,
+    "ast_hash": "360ac72624544fb785153225c93e5207",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/photo-1780754604712-52f2620384af_converted.txt": {
+    "mtime": 1781520395.5018485,
+    "ast_hash": "ad35ebb73def2730aaf8803e25f7fd72",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/premium_photo-1729087867313-7e847b5ef007_converted.txt": {
+    "mtime": 1781520395.5018485,
+    "ast_hash": "950329b542b355c5217658528cde346e",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/premium_photo-1729087867432-679bb2d246a9_converted.txt": {
+    "mtime": 1781520395.5018485,
+    "ast_hash": "b89fdc8e6204093aa7e4c4554b49b5ad",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/premium_photo-1754240411290-846d3eb201b2_converted.txt": {
+    "mtime": 1781520395.5018485,
+    "ast_hash": "d621f13a41d6e2fd1b5c01864cba3456",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/obj_train_data/profile-corn-crop-shot-south-dakota-32955534.txt": {
+    "mtime": 1781520395.5018485,
+    "ast_hash": "15aedd21d5c4fe3c76239b8410e6abd0",
+    "semantic_hash": ""
+  },
+  "grape_corn_detection_final/train.txt": {
+    "mtime": 1781520395.5018485,
+    "ast_hash": "2e9cbfdfaaee5fc0df558e34aa9a6a19",
+    "semantic_hash": ""
+  },
+  "grape_disease/hyp.yaml": {
+    "mtime": 1781520395.5109472,
+    "ast_hash": "0b99b67c046abfdcc69005b3d8db9e83",
+    "semantic_hash": ""
+  },
+  "grape_disease/opt.yaml": {
+    "mtime": 1781520395.5124118,
+    "ast_hash": "e8723c9c4d58ea9e731493c720d3b77c",
+    "semantic_hash": ""
+  },
+  "requirements.txt": {
+    "mtime": 1781693404.344398,
+    "ast_hash": "4b8ee00afc95cae915a064c4a4c04ba6",
+    "semantic_hash": ""
+  },
+  "12.webp": {
+    "mtime": 1781520942.1158059,
+    "ast_hash": "9a3813ff9becf263b1f711130a807ce5",
+    "semantic_hash": ""
+  },
+  "blight tester 2.jpg": {
+    "mtime": 1781500557.9903762,
+    "ast_hash": "456b1fcf998adac9d7a3e5628581849a",
+    "semantic_hash": ""
+  },
+  "corn_disease_v4/F1_curve.png": {
+    "mtime": 1781520395.29447,
+    "ast_hash": "b4ba483e1489f46fb2b228f507e33d45",
+    "semantic_hash": ""
+  },
+  "corn_disease_v4/PR_curve.png": {
+    "mtime": 1781520395.2950778,
+    "ast_hash": "715006915f0fbfe83e889fdf71d4583d",
+    "semantic_hash": ""
+  },
+  "corn_disease_v4/P_curve.png": {
+    "mtime": 1781520395.2967012,
+    "ast_hash": "1fa6fefd9f61050ddf6aaf8e066c713c",
+    "semantic_hash": ""
+  },
+  "corn_disease_v4/R_curve.png": {
+    "mtime": 1781520395.298621,
+    "ast_hash": "b65aa003e912bcb35bf2eef265439313",
+    "semantic_hash": ""
+  },
+  "corn_disease_v4/confusion_matrix.png": {
+    "mtime": 1781520395.2998562,
+    "ast_hash": "c892338e50f79f196a5e83f2fad045da",
+    "semantic_hash": ""
+  },
+  "corn_disease_v4/labels.jpg": {
+    "mtime": 1781520395.3068116,
+    "ast_hash": "be37b3b6a9202b1a284b7b04cb43d02a",
+    "semantic_hash": ""
+  },
+  "corn_disease_v4/labels_correlogram.jpg": {
+    "mtime": 1781520395.3072581,
+    "ast_hash": "753d612b02c16fc9d12ca30319fcfee4",
+    "semantic_hash": ""
+  },
+  "corn_disease_v4/results.png": {
+    "mtime": 1781520395.3089,
+    "ast_hash": "2fef9bddd95071bb9e6e3454539aa29a",
+    "semantic_hash": ""
+  },
+  "corn_disease_v4/train_batch0.jpg": {
+    "mtime": 1781520395.3113675,
+    "ast_hash": "1eb70c96fe92b0f1775eb3b25f089d7a",
+    "semantic_hash": ""
+  },
+  "corn_disease_v4/train_batch1.jpg": {
+    "mtime": 1781520395.313713,
+    "ast_hash": "dfaaeb35f0cb68b97f1fcb17e6a24418",
+    "semantic_hash": ""
+  },
+  "corn_disease_v4/train_batch2.jpg": {
+    "mtime": 1781520395.3161776,
+    "ast_hash": "3c1957d621d484b7101e469d43d4f129",
+    "semantic_hash": ""
+  },
+  "corn_disease_v4/val_batch0_labels.jpg": {
+    "mtime": 1781520395.3183832,
+    "ast_hash": "2f59040fdfddc1b90c7f4e3302848507",
+    "semantic_hash": ""
+  },
+  "corn_disease_v4/val_batch0_pred.jpg": {
+    "mtime": 1781520395.3206534,
+    "ast_hash": "3bffca7317165b7e45a0c85383b84d33",
+    "semantic_hash": ""
+  },
+  "corn_disease_v4/val_batch1_labels.jpg": {
+    "mtime": 1781520395.3226814,
+    "ast_hash": "f6cf336760d8156ad108f9699947bc3b",
+    "semantic_hash": ""
+  },
+  "corn_disease_v4/val_batch1_pred.jpg": {
+    "mtime": 1781520395.3247511,
+    "ast_hash": "2c9528ea71e376ebbe68f0f383d75dde",
+    "semantic_hash": ""
+  },
+  "grape_disease/F1_curve.png": {
+    "mtime": 1781520395.5030491,
+    "ast_hash": "e43ef8484d2348f32de246772a39bfd8",
+    "semantic_hash": ""
+  },
+  "grape_disease/PR_curve.png": {
+    "mtime": 1781520395.5036385,
+    "ast_hash": "f1a053fff34d1729674bfcd81eb06fd6",
+    "semantic_hash": ""
+  },
+  "grape_disease/P_curve.png": {
+    "mtime": 1781520395.5044665,
+    "ast_hash": "f8597d0b720d5cce0f48a753ccb4384f",
+    "semantic_hash": ""
+  },
+  "grape_disease/R_curve.png": {
+    "mtime": 1781520395.5052156,
+    "ast_hash": "1c541d32bc11814e8e26093809e013a4",
+    "semantic_hash": ""
+  },
+  "grape_disease/confusion_matrix.png": {
+    "mtime": 1781520395.5057147,
+    "ast_hash": "ee03a42f83c88acb72786d2ce63c7376",
+    "semantic_hash": ""
+  },
+  "grape_disease/labels.jpg": {
+    "mtime": 1781520395.5115643,
+    "ast_hash": "226c233f8e68dd7c86b6369756e25fa6",
+    "semantic_hash": ""
+  },
+  "grape_disease/labels_correlogram.jpg": {
+    "mtime": 1781520395.5123768,
+    "ast_hash": "47659719bc1256e4d02e23c3fbd92231",
+    "semantic_hash": ""
+  },
+  "grape_disease/results.png": {
+    "mtime": 1781520395.5140743,
+    "ast_hash": "8e71ab9dfcebff721a2fb9c31c08775a",
+    "semantic_hash": ""
+  },
+  "grape_disease/train_batch0.jpg": {
+    "mtime": 1781520395.516455,
+    "ast_hash": "c74b5c7a816413b2bb126e154bf9f73c",
+    "semantic_hash": ""
+  },
+  "grape_disease/train_batch1.jpg": {
+    "mtime": 1781520395.5185218,
+    "ast_hash": "a785a84a59c08763c486b81b0083a7e1",
+    "semantic_hash": ""
+  },
+  "grape_disease/train_batch2.jpg": {
+    "mtime": 1781520395.5210688,
+    "ast_hash": "e72178f97b6cbdb2b29afbdad399a53a",
+    "semantic_hash": ""
+  },
+  "grape_disease/val_batch0_labels.jpg": {
+    "mtime": 1781520395.5240102,
+    "ast_hash": "ffdfb703c7c069d94b639406724db3aa",
+    "semantic_hash": ""
+  },
+  "grape_disease/val_batch0_pred.jpg": {
+    "mtime": 1781520395.526976,
+    "ast_hash": "97d49f9dbd922101dcd6206a08a62365",
+    "semantic_hash": ""
+  },
+  "grape_disease/val_batch1_labels.jpg": {
+    "mtime": 1781520395.5299463,
+    "ast_hash": "a3c4e181401b57ec076738304510945d",
+    "semantic_hash": ""
+  },
+  "grape_disease/val_batch1_pred.jpg": {
+    "mtime": 1781520395.5328665,
+    "ast_hash": "adbf258871bcc15a944492e654ba160c",
+    "semantic_hash": ""
+  },
+  "model2_test/F1_curve.png": {
+    "mtime": 1781520395.6777365,
+    "ast_hash": "396e5dd96de8ba3d2dd0b4597355f144",
+    "semantic_hash": ""
+  },
+  "model2_test/PR_curve.png": {
+    "mtime": 1781520395.678359,
+    "ast_hash": "0537c58e79846961be77808162c985d5",
+    "semantic_hash": ""
+  },
+  "model2_test/P_curve.png": {
+    "mtime": 1781520395.6792693,
+    "ast_hash": "e636b9135a1e35be35fdc2059976cc24",
+    "semantic_hash": ""
+  },
+  "model2_test/R_curve.png": {
+    "mtime": 1781520395.679981,
+    "ast_hash": "9952df2951e05835c5d58641ab3fda47",
+    "semantic_hash": ""
+  },
+  "model2_test/confusion_matrix.png": {
+    "mtime": 1781520395.6805065,
+    "ast_hash": "099c7e6621ff5a3e72842828fb3a1f5a",
+    "semantic_hash": ""
+  },
+  "model2_test/val_batch0_labels.jpg": {
+    "mtime": 1781520395.6829755,
+    "ast_hash": "524fb7b78762f8259a6fa2f7bab36c17",
+    "semantic_hash": ""
+  },
+  "model2_test/val_batch0_pred.jpg": {
+    "mtime": 1781520395.6854067,
+    "ast_hash": "09676ebaf17b3d67c3eb6c5770ed4fb4",
+    "semantic_hash": ""
+  },
+  "model2_test/val_batch1_labels.jpg": {
+    "mtime": 1781520395.6884773,
+    "ast_hash": "64eb3954b7169893706134abf9a2b186",
+    "semantic_hash": ""
+  },
+  "model2_test/val_batch1_pred.jpg": {
+    "mtime": 1781520395.6915102,
+    "ast_hash": "3a74d54cf9fd845d2debfeb64be8c32e",
+    "semantic_hash": ""
+  },
+  "stock-photo-southern-leaf-blight-252499981.jpg": {
+    "mtime": 1781267095.5380914,
+    "ast_hash": "393e1c44784c4c98906c57ec3eb12831",
+    "semantic_hash": ""
+  },
+  "tester 10.jpeg": {
+    "mtime": 1781502156.5141215,
+    "ast_hash": "7b11b187c21d7de82a7795b89f46c31c",
+    "semantic_hash": ""
+  },
+  "tester 11.webp": {
+    "mtime": 1781520912.7618055,
+    "ast_hash": "acb309ebacb2e3d30216c5bf7b4017c4",
+    "semantic_hash": ""
+  },
+  "tester 13.jpg": {
+    "mtime": 1781526495.1444857,
+    "ast_hash": "3af2a9e1603f91c75e21a24d7a7324e3",
+    "semantic_hash": ""
+  },
+  "tester 13.webp": {
+    "mtime": 1781599031.4777102,
+    "ast_hash": "84efb0b5e21b03d546cb0568fad393ad",
+    "semantic_hash": ""
+  },
+  "tester 14.jpg": {
+    "mtime": 1781526783.4772682,
+    "ast_hash": "6eceb550b534295ffdbe93d879572f8b",
+    "semantic_hash": ""
+  },
+  "tester 14.webp": {
+    "mtime": 1781599351.6018553,
+    "ast_hash": "e47aea3b68a119f7a0e23033c16c9447",
+    "semantic_hash": ""
+  },
+  "tester 15.webp": {
+    "mtime": 1781599472.8499317,
+    "ast_hash": "a7a04af62c8245fecaba1bc14d54af18",
+    "semantic_hash": ""
+  },
+  "tester 3.jpg": {
+    "mtime": 1781500721.7023087,
+    "ast_hash": "fae17ca3836f86d008ca0b78dd891180",
+    "semantic_hash": ""
+  },
+  "tester 4.jpg": {
+    "mtime": 1781500775.9749048,
+    "ast_hash": "491deed76144a0a25be4d587daa94444",
+    "semantic_hash": ""
+  },
+  "tester 5.jpg": {
+    "mtime": 1781501848.219855,
+    "ast_hash": "e5dcc6a2a0cf4a8e88491bdffb07ea4c",
+    "semantic_hash": ""
+  },
+  "tester 6.jpg": {
+    "mtime": 1781501896.5588198,
+    "ast_hash": "9def7275ecee9fb8574628fbc16e168f",
+    "semantic_hash": ""
+  },
+  "tester 8.jpg": {
+    "mtime": 1781502063.0982313,
+    "ast_hash": "a263a526665ba19c76f08c507c80f433",
+    "semantic_hash": ""
+  },
+  "tester 9.jpeg": {
+    "mtime": 1781502105.8028774,
+    "ast_hash": "e9c0f4e1df2563af06c836f7aadd01b8",
+    "semantic_hash": ""
+  },
+  "tester7.webp": {
+    "mtime": 1781598961.2989106,
+    "ast_hash": "9c0007be555857fda320fdf4f6152a51",
+    "semantic_hash": ""
+  }
+}
