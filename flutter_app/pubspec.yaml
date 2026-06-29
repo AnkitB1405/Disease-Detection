@@ -1,0 +1,37 @@
+name: crop_disease_app
+description: "Crop Disease Detection — Flutter client for the FastAPI backend."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.12.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+
+  # State management — compile-safe, testable, decoupled from the widget tree.
+  flutter_riverpod: ^2.6.1
+
+  # Networking
+  dio: ^5.7.0                  # REST + multipart upload
+  http: ^1.2.2                # streamed responses for Server-Sent Events
+  web_socket_channel: ^3.0.1   # live camera preview frames
+
+  # Media / input
+  image_picker: ^1.1.2         # gallery + camera capture
+  camera: ^0.11.0+2            # live preview
+
+  # Rendering
+  flutter_markdown: ^0.7.4     # medicine table + treatment text
+  fl_chart: ^0.69.2            # symptom-severity chart
+  intl: ^0.19.0                # date formatting
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true

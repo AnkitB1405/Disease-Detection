@@ -11,6 +11,7 @@ from uuid import uuid4
 
 from PIL import Image, ImageDraw, ImageFont
 
+from crop_detection._compat import install_pathlib_compat
 from crop_detection.disease_logic import (
     Detection,
     display_disease_name,
@@ -18,6 +19,10 @@ from crop_detection.disease_logic import (
     select_disease,
 )
 from crop_detection.solutions import get_recommendation
+
+# The trained checkpoints were pickled on Linux/Python 3.13; install the
+# cross-platform pathlib shims before any torch.load() unpickles them.
+install_pathlib_compat()
 
 CROP_INFERENCE_THRESHOLD = 0.4
 DISEASE_INFERENCE_THRESHOLD = 0.10
