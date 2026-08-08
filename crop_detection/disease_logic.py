@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Iterable
 
-GRAPE_CONF_THRESHOLD = 0.40
+GRAPE_CONF_THRESHOLD = 0.20
 
 
 @dataclass(frozen=True)

@@ -50,8 +50,8 @@
     "semantic_hash": ""
   },
   "crop_detection/disease_logic.py": {
-    "mtime": 1781520395.4963672,
-    "ast_hash": "306ad0ae3d5b82e17c2b9adbf8d780f7",
+    "mtime": 1782369570.763401,
+    "ast_hash": "6c96d4eed32d04e3c118b2e7ea70c36f",
     "semantic_hash": ""
   },
   "crop_detection/feedback.py": {
@@ -1939,34 +1939,29 @@
     "ast_hash": "fae17ca3836f86d008ca0b78dd891180",
     "semantic_hash": ""
   },
-  "tester 4.jpg": {
-    "mtime": 1781500775.9749048,
-    "ast_hash": "491deed76144a0a25be4d587daa94444",
-    "semantic_hash": ""
-  },
-  "tester 5.jpg": {
-    "mtime": 1781501848.219855,
-    "ast_hash": "e5dcc6a2a0cf4a8e88491bdffb07ea4c",
-    "semantic_hash": ""
-  },
-  "tester 6.jpg": {
-    "mtime": 1781501896.5588198,
-    "ast_hash": "9def7275ecee9fb8574628fbc16e168f",
-    "semantic_hash": ""
-  },
   "tester 8.jpg": {
     "mtime": 1781502063.0982313,
     "ast_hash": "a263a526665ba19c76f08c507c80f433",
     "semantic_hash": ""
   },
-  "tester 9.jpeg": {
-    "mtime": 1781502105.8028774,
-    "ast_hash": "e9c0f4e1df2563af06c836f7aadd01b8",
-    "semantic_hash": ""
-  },
   "tester7.webp": {
     "mtime": 1781598961.2989106,
     "ast_hash": "9c0007be555857fda320fdf4f6152a51",
+    "semantic_hash": ""
+  },
+  "KT_2019062613.jpeg": {
+    "mtime": 1782370561.5604928,
+    "ast_hash": "27ffba048575cec41d09799f3d474040",
+    "semantic_hash": ""
+  },
+  "tester 18.jpeg": {
+    "mtime": 1782370594.274371,
+    "ast_hash": "3ac669f65b9362ef2918d7116055b207",
+    "semantic_hash": ""
+  },
+  "tester 19.jpg": {
+    "mtime": 1782370672.49245,
+    "ast_hash": "49504654806869672e3d89eebbeaf3c5",
     "semantic_hash": ""
   }
 }
